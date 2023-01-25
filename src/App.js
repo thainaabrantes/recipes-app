@@ -6,8 +6,8 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/meals" component={ Recipes } />
-      <Route path="/drinks" component={ Recipes } />
+      <Route exact path="/meals" component={ Recipes } />
+      <Route exact path="/drinks" component={ Recipes } />
     </Switch>
   );
 }
