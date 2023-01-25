@@ -2,7 +2,7 @@ import React from 'react';
 import useLogin from '../hook/useLogin';
 
 function Login() {
-  const { form, handlerChange } = useLogin();
+  const { form, handlerChange, isFormValid, handlerClick } = useLogin();
 
   return (
     <form>
@@ -14,10 +14,12 @@ function Login() {
           type="email"
           name="email"
           id="email"
+          placeholder="Email"
         />
       </label>
       <label htmlFor="password">
         <input
+          placeholder="Password"
           value={ form.password }
           data-testid="password-input"
           onChange={ handlerChange }
@@ -26,7 +28,14 @@ function Login() {
           id="password"
         />
       </label>
-      <button data-testid="login-submit-btn">Enter</button>
+      <button
+        onClick={ handlerClick }
+        type="button"
+        disabled={ isFormValid() }
+        data-testid="login-submit-btn"
+      >
+        Enter
+      </button>
     </form>
   );
 }
