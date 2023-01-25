@@ -5,9 +5,6 @@ import App from '../App';
 import renderWithRouter from './Helpers/renderWithRouter';
 
 describe('Teste tela de login', () => {
-  // beforeEach(() => {
-  //   const { history } = renderWithRouter(<App />);
-  // });
   it('Testar se os inputs e o botão aparecem na tela', () => {
     const { history } = renderWithRouter(<App />);
     const buttonEnter = screen.getByTestId('login-submit-btn');
