@@ -8,6 +8,8 @@ import {
   URL_MEALS,
   URL_COCKTAILS,
   INIT_SEARCH,
+  LENGTH_ALERT,
+  RESULT_ALERT,
 } from '../helpers/strings';
 
 function SearchBarProvider({ children }) {
@@ -20,33 +22,33 @@ function SearchBarProvider({ children }) {
     const { text, radio } = searchBar;
     const { pathname } = history.location;
 
-    function handleLetter(URL) {
-      if (text.length === 1) return `${URL}search.php?f=${text}`;
-      global.alert('Your search must have only 1 (one) character');
-      return null;
-    }
-
-    function handleRadio(URL) {
+    function handleLabel(URL) {
       switch (radio) {
       case INGREDIENT_LABEL:
         return `${URL}filter.php?i=${text}`;
       case NAME_LABEL:
         return `${URL}search.php?s=${text}`;
       default:
-        return handleLetter(URL);
+        return text.length === 1
+          ? `${URL}search.php?f=${text}`
+          : global.alert(LENGTH_ALERT);
       }
     }
 
     if (text) {
       const actualURL = pathname === '/meals'
-        ? handleRadio(URL_MEALS)
-        : handleRadio(URL_COCKTAILS);
+        ? handleLabel(URL_MEALS)
+        : handleLabel(URL_COCKTAILS);
 
       const fetchAPI = async () => {
-        if (actualURL === null) return null;
-        const response = await fetch(actualURL);
-        const data = await response.json();
-        setRecipes(data);
+        try {
+          if (actualURL === null) return null;
+          const response = await fetch(actualURL);
+          const data = await response.json();
+          setRecipes(data);
+        } catch {
+          setRecipes(null);
+        }
       }; fetchAPI();
     }
   }, [history, searchBar]);
@@ -55,13 +57,12 @@ function SearchBarProvider({ children }) {
   useEffect(() => {
     const { pathname } = history.location;
     const path = pathname.slice(1);
-
-    if (recipes[path]) {
-      if (recipes[path].length === 1) {
-        history.push();
-      }
-    } else if (recipes[path] === null) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    if (recipes === null) {
+      return global.alert(RESULT_ALERT);
+    } if (recipes[path] === null) {
+      return global.alert(RESULT_ALERT);
+    } if (recipes[path] && recipes[path].length === 1) {
+      return history.push();
     }
   }, [history, recipes]);
 
