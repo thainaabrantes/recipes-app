@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Lupa from '../images/searchIcon.svg';
+import drinkIcon from '../images/drinkIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
 import ProfileIcon from '../images/profileIcon.svg';
+import Lupa from '../images/searchIcon.svg';
 
 function Header() {
   const history = useHistory();
   const [renderSearchIcon, setRenderSearchIcon] = useState(false);
   const [showSearchComponent, setShowSearchComponent] = useState(false);
+  const [isMeal, setIsMeal] = useState(true);
 
   useEffect(() => {
     const { pathname } = history.location;
@@ -16,6 +19,7 @@ function Header() {
       break;
     case '/drinks':
       setRenderSearchIcon(true);
+      setIsMeal(false);
       break;
     default:
       setRenderSearchIcon(false);
@@ -25,7 +29,18 @@ function Header() {
   return (
     <header>
       <div>
-        <h1 data-testid="page-title">RECIPES app</h1>
+        {
+          isMeal ? (
+            <div>
+              <img src={ mealIcon } alt="Meal" />
+              <h1 data-testid="page-title">Meals</h1>
+            </div>)
+            : (
+              <div>
+                <img src={ drinkIcon } alt="Drink" />
+                <h1 data-testid="page-title">Drinks</h1>
+              </div>)
+        }
         {
           renderSearchIcon
           && (

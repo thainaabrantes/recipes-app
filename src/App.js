@@ -1,10 +1,10 @@
 import { Route, Switch } from 'react-router-dom';
+import DoneRecipes from './components/DoneRecipes';
+import FavoriteRecipes from './components/FavoriteRecipes';
+import Profile from './components/Profile';
 import Login from './pages/Login';
 import RecipeDetails from './pages/RecipeDetails';
 import Recipes from './pages/Recipes';
-import Profile from './components/Profile';
-import DoneRecipes from './components/DoneRecipes';
-import FavoriteRecipes from './components/FavoriteRecipes';
 
 function App() {
   return (

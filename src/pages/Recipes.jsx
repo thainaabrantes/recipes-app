@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const NUMBER_12 = 12;
 const NUMBER_FIVE = 5;
@@ -84,6 +85,7 @@ function Recipes() {
 
   return (
     <div>
+      <Header />
       <button
         onClick={ handlerClickAllRecipes }
         type="button"
