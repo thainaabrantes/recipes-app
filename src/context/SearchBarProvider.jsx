@@ -14,7 +14,7 @@ import {
 
 function SearchBarProvider({ children }) {
   const [searchBar, setSearchBar] = useState(INIT_SEARCH);
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState({ URL: '', results: [] });
   const history = useHistory();
   const searchMemo = useMemo(() => ({ searchBar, setSearchBar }), [searchBar]);
 
@@ -23,16 +23,22 @@ function SearchBarProvider({ children }) {
     const { pathname } = history.location;
 
     function handleLabel(URL) {
+      let setURL;
+
       switch (radio) {
       case INGREDIENT_LABEL:
-        return `${URL}filter.php?i=${text}`;
+        setURL = `${URL}filter.php?i=${text}`;
+        break;
       case NAME_LABEL:
-        return `${URL}search.php?s=${text}`;
+        setURL = `${URL}search.php?s=${text}`;
+        break;
       default:
-        return text.length === 1
-          ? `${URL}search.php?f=${text}`
-          : global.alert(LENGTH_ALERT);
+        if (text.length === 1) setURL = `${URL}search.php?f=${text}`;
+        else global.alert(LENGTH_ALERT);
       }
+
+      setRecipes((prev) => ({ ...prev, URL: setURL }));
+      return setURL;
     }
 
     if (text) {
@@ -61,7 +67,7 @@ function SearchBarProvider({ children }) {
     if (recipes === null || recipes[path] === null) {
       return global.alert(RESULT_ALERT);
     } if (recipes[path] && recipes[path].length === 1) {
-      return history.push();
+      return history.push(); // recipes.idMeal
     }
   }, [history, recipes]);
 
