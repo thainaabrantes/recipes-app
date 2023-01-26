@@ -1,9 +1,11 @@
 import { useLocation } from 'react-router-dom';
 import useRecipeAPI from '../hook/useRecipeAPi';
+import useRecomendAPI from '../hook/useRecomendAPI';
 
 function RecipeDetails() {
   const recipe = useRecipeAPI();
   const location = useLocation();
+  const recomendation = useRecomendAPI();
 
   console.log(recipe);
 
@@ -56,6 +58,9 @@ function RecipeDetails() {
                 src={ recipe.strYoutube }
                 frameBorder="0"
               />
+              {
+                console.log(recomendation)
+              }
             </div>
           )
           : (
@@ -87,6 +92,9 @@ function RecipeDetails() {
               </h4>
               <h4> Instruções</h4>
               <p data-testid="instructions">{ recipe.strInstructions }</p>
+              {
+                console.log(recomendation)
+              }
             </div>
           )
       }
