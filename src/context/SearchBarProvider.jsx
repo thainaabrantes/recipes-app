@@ -57,9 +57,8 @@ function SearchBarProvider({ children }) {
   useEffect(() => {
     const { pathname } = history.location;
     const path = pathname.slice(1);
-    if (recipes === null) {
-      return global.alert(RESULT_ALERT);
-    } if (recipes[path] === null) {
+
+    if (recipes === null || recipes[path] === null) {
       return global.alert(RESULT_ALERT);
     } if (recipes[path] && recipes[path].length === 1) {
       return history.push();
