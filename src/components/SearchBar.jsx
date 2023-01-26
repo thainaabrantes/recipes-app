@@ -10,6 +10,7 @@ import {
 function SearchBar() {
   const { setSearchBar } = useContext(SearchBarContext);
   const [search, setSearch] = useState(INIT_SEARCH);
+  const labels = [INGREDIENT_LABEL, NAME_LABEL, LETTER_LABEL];
 
   const textInput = (
     <input
@@ -19,44 +20,22 @@ function SearchBar() {
     />
   );
 
-  const radioInput = (
+  const alterRadioInput = (
     <>
-      <label htmlFor="ingredientRadio">
-        <input
-          type="radio"
-          id="ingredientRadio"
-          name="radioInput"
-          value={ INGREDIENT_LABEL }
-          onChange={ ({ target }) => setSearch({ ...search, radio: target.value }) }
-          checked={ search.radio === INGREDIENT_LABEL }
-          data-testid="ingredient-search-radio"
-        />
-        {'Ingredient '}
-      </label>
-      <label htmlFor="nameRadio">
-        <input
-          type="radio"
-          id="nameRadio"
-          name="radioInput"
-          value={ NAME_LABEL }
-          onChange={ ({ target }) => setSearch({ ...search, radio: target.value }) }
-          checked={ search.radio === NAME_LABEL }
-          data-testid="name-search-radio"
-        />
-        {'Name '}
-      </label>
-      <label htmlFor="firstLetterRadio">
-        <input
-          type="radio"
-          id="firstLetterRadio"
-          name="radioInput"
-          value={ LETTER_LABEL }
-          onChange={ ({ target }) => setSearch({ ...search, radio: target.value }) }
-          checked={ search.radio === LETTER_LABEL }
-          data-testid="first-letter-search-radio"
-        />
-        {'First letter '}
-      </label>
+      {labels.map((label) => (
+        <label key={ label } htmlFor={ `${label}Radio` }>
+          <input
+            type="radio"
+            id={ `${label}Radio` }
+            name="labelRadio"
+            value={ label }
+            onChange={ ({ target }) => setSearch({ ...search, radio: target.value }) }
+            checked={ search.radio === label }
+            data-testid={ `${label}-search-radio` }
+          />
+          {`${label} `}
+        </label>
+      ))}
     </>
   );
 
@@ -74,7 +53,7 @@ function SearchBar() {
   return (
     <>
       {textInput}
-      {radioInput}
+      {alterRadioInput}
       {button}
     </>
   );

@@ -1,6 +1,6 @@
-const INGREDIENT_LABEL = 'Ingredient';
-const NAME_LABEL = 'Name';
-const LETTER_LABEL = 'First letter';
+const INGREDIENT_LABEL = 'ingredient';
+const NAME_LABEL = 'name';
+const LETTER_LABEL = 'first-letter';
 
 const URL_MEALS = 'https://www.themealdb.com/api/json/v1/1/';
 const URL_COCKTAILS = 'https://www.thecocktaildb.com/api/json/v1/1/';
