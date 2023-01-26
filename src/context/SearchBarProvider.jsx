@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import propTypes from 'prop-types';
-// import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import SearchBarContext from './SearchBarContext';
 
 const INGREDIENT_LABEL = 'Ingredient';
@@ -17,15 +17,18 @@ const INIT_SEARCH = {
 
 function SearchBarProvider({ children }) {
   const [searchBar, setSearchBar] = useState(INIT_SEARCH);
+  const [recipes, setRecipes] = useState([]);
+  const history = useHistory();
   const searchMemo = useMemo(() => ({ searchBar, setSearchBar }), [searchBar]);
-  const location = 0;
 
   useEffect(() => {
     const { text, radio } = searchBar;
+    const { pathname } = history.location;
 
-    function handleLetter(validated) {
-      if (validated) setSearchBar(`${URL}search.php?f=${search.text}`);
-      else global.alert('Your search must have only 1 (one) character');
+    function handleLetter(URL) {
+      if (text.length === 1) return `${URL}search.php?f=${text}`;
+      global.alert('Your search must have only 1 (one) character');
+      return null;
     }
 
     function handleRadio(URL) {
@@ -35,22 +38,37 @@ function SearchBarProvider({ children }) {
       case NAME_LABEL:
         return `${URL}search.php?s=${text}`;
       default:
-        return handleLetter(text.length === 1);
+        return handleLetter(URL);
       }
     }
 
     if (text) {
-      const actualURL = location === 0
+      const actualURL = pathname === '/meals'
         ? handleRadio(URL_MEALS)
         : handleRadio(URL_COCKTAILS);
 
       const fetchAPI = async () => {
+        if (actualURL === null) return null;
         const response = await fetch(actualURL);
         const data = await response.json();
-        console.log(data);
+        setRecipes(data);
       }; fetchAPI();
     }
-  }, [searchBar]);
+  }, [history, searchBar]);
+
+  // REDIRECIONAR À TELA DE DETALHES;
+  useEffect(() => {
+    const { pathname } = history.location;
+    const path = pathname.slice(1);
+
+    if (recipes[path]) {
+      if (recipes[path].length === 1) {
+        history.push();
+      }
+    } else if (recipes[path] === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+  }, [history, recipes]);
 
   return (
     <SearchBarContext.Provider value={ searchMemo }>
