@@ -9,7 +9,6 @@ function Header() {
   const history = useHistory();
   const [renderSearchIcon, setRenderSearchIcon] = useState(false);
   const [showSearchComponent, setShowSearchComponent] = useState(false);
-  const [isMeal, setIsMeal] = useState(true);
 
   useEffect(() => {
     const { pathname } = history.location;
@@ -19,28 +18,33 @@ function Header() {
       break;
     case '/drinks':
       setRenderSearchIcon(true);
-      setIsMeal(false);
       break;
     default:
       setRenderSearchIcon(false);
     }
-  }, [history.location]);
+  }, []);
 
   return (
     <header>
       <div>
-        {
-          isMeal ? (
-            <div>
-              <img src={ mealIcon } alt="Meal" />
-              <h1 data-testid="page-title">Meals</h1>
-            </div>)
-            : (
-              <div>
-                <img src={ drinkIcon } alt="Drink" />
-                <h1 data-testid="page-title">Drinks</h1>
-              </div>)
-        }
+        { history.location.pathname === '/meals' && (
+          <div>
+            <img src={ mealIcon } alt="Meal" />
+            <h1 data-testid="page-title">Meals</h1>
+          </div>
+        ) }
+        { history.location.pathname === '/drinks' && (
+          <div>
+            <img src={ drinkIcon } alt="Drink" />
+            <h1 data-testid="page-title">Drinks</h1>
+          </div>
+        ) }
+        { history.location.pathname === '/profile' && (
+          <div>
+            <img src={ drinkIcon } alt="Drink" />
+            <h1 data-testid="page-title">Profile</h1>
+          </div>
+        ) }
         {
           renderSearchIcon
           && (
