@@ -33,7 +33,13 @@ function Header() {
             </button>
           )
         }
-        <img data-testid="profile-top-btn" src={ ProfileIcon } alt="Usuário" />
+        <button
+          data-testid="profile-top-btn"
+          src={ ProfileIcon }
+          onClick={ () => history.push('/profile') }
+        >
+          <img src={ ProfileIcon } alt="Usuário" />
+        </button>
       </div>
     </header>
   );
