@@ -1,7 +1,6 @@
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import meals from '../../cypress/mocks/meals';
 import App from '../App';
 import renderWithRouter from './Helpers/renderWithRouter';
 
