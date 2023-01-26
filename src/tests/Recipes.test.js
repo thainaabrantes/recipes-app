@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 import beefMeals from '../../cypress/mocks/beefMeals';
 import meals from '../../cypress/mocks/meals';
 import App from '../App';
-import renderWithRouter from './Helpers/renderWithRouter';
+import renderWithRouter from './helpers/renderWithRouter';
 
 describe('Teste da pages /Recipes', () => {
   beforeEach(async () => {
