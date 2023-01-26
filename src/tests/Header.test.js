@@ -5,6 +5,8 @@ import renderWithRouter from './Helpers/renderWithRouter';
 import App from '../App';
 
 describe('Teste do Header', () => {
+  const testIdOfButtonSearch = 'search-top-btn';
+
   it('Testa se o Header tem o ícone de perfil', () => {
     const { history } = renderWithRouter(<App />);
     act(() => {
@@ -26,7 +28,7 @@ describe('Teste do Header', () => {
     act(() => {
       history.push('/meals');
     });
-    const buttonSearch = screen.getByTestId('search-top-btn');
+    const buttonSearch = screen.getByTestId(testIdOfButtonSearch);
     expect(buttonSearch).toBeInTheDocument();
   });
   it('Testa se o botão search aparece no Header, quando na rota /drinks', () => {
@@ -34,7 +36,7 @@ describe('Teste do Header', () => {
     act(() => {
       history.push('/drinks');
     });
-    const buttonSearch = screen.getByTestId('search-top-btn');
+    const buttonSearch = screen.getByTestId(testIdOfButtonSearch);
     expect(buttonSearch).toBeInTheDocument();
   });
   // it('Testa se o botão search não aparece no Header, quando na rota /profile', () => {
@@ -42,7 +44,7 @@ describe('Teste do Header', () => {
   //   act(() => {
   //     history.push('/profile');
   //   });
-  //   const buttonSearch = screen.getByTestId('search-top-btn');
+  //   const buttonSearch = screen.getByTestId(testIdOfButtonSearch);
   //   expect(buttonSearch).not.toBeInTheDocument();
   // });
   it('Testa se ao clicar no icone de perfil a rota é redirecionada para /profile', () => {
@@ -54,5 +56,16 @@ describe('Teste do Header', () => {
     expect(profileIcon).toBeInTheDocument();
     userEvent.click(profileIcon);
     expect(history.location.pathname).toBe('/profile');
+  });
+  it('Testa se ao clicar no icone search o input de pesquisa é mostrado', () => {
+    const { history } = renderWithRouter(<App />);
+    act(() => {
+      history.push('/meals');
+    });
+    const buttonSearch = screen.getByTestId(testIdOfButtonSearch);
+    expect(buttonSearch).toBeInTheDocument();
+    userEvent.click(buttonSearch);
+    const searchInput = screen.getByTestId('search-input');
+    expect(searchInput).toBeInTheDocument();
   });
 });
