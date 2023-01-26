@@ -8,15 +8,21 @@ import {
   URL_MEALS,
   URL_COCKTAILS,
   INIT_SEARCH,
+  INIT_RECIPES,
   LENGTH_ALERT,
   RESULT_ALERT,
 } from '../helpers/strings';
 
 function SearchBarProvider({ children }) {
+  const [recipes, setRecipes] = useState(INIT_RECIPES);
   const [searchBar, setSearchBar] = useState(INIT_SEARCH);
-  const [recipes, setRecipes] = useState({ URL: '', results: [], type: '' });
   const history = useHistory();
-  const searchMemo = useMemo(() => ({ searchBar, setSearchBar }), [searchBar]);
+  const searchMemo = useMemo(() => ({
+    recipes,
+    searchBar,
+    setRecipes,
+    setSearchBar,
+  }), [recipes, searchBar]);
 
   useEffect(() => {
     const { text, radio } = searchBar;
@@ -68,9 +74,9 @@ function SearchBarProvider({ children }) {
     if (results === null || results[type] === null) {
       return global.alert(RESULT_ALERT);
     } if (results[type] && results[type].length === 1) {
-      return history.push(`${pathname}/${results[type][0][ID]}`); // `${pathname}/${recipes.idMeal}`
+      return history.push(`${pathname}/${results[type][0][ID]}`);
     } if (results[type] && results[type].length > 1) {
-      console.log(results[type]);
+      return history.push(`${pathname}/${results[type][0][ID]}`);
     }
   }, [history, recipes]);
 
