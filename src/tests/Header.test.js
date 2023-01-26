@@ -2,7 +2,7 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
-import renderWithRouter from './Helpers/renderWithRouter';
+import renderWithRouter from './helpers/renderWithRouter';
 
 describe('Teste do Header', () => {
   const testIdOfButtonSearch = 'search-top-btn';

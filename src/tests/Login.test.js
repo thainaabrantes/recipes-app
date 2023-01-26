@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
-import renderWithRouter from './Helpers/renderWithRouter';
+import renderWithRouter from './helpers/renderWithRouter';
 
 describe('Teste tela de login', () => {
   it('Testar se os inputs e o botão aparecem na tela', () => {
