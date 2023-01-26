@@ -3,11 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 function Recipe() {
   const location = useLocation();
-  const [recipe, setRecipe] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [recipe, setRecipe] = useState({});
 
   const pageId = location.pathname.match(/\d+$/)[0];
-  console.log(recipe);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -36,6 +35,7 @@ function Recipe() {
   if (isLoading) {
     return <p>Carregando...</p>;
   }
+  return (recipe);
 }
 
 export default Recipe;

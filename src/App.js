@@ -5,9 +5,11 @@ import Profile from './components/Profile';
 import Login from './pages/Login';
 import RecipeDetails from './pages/RecipeDetails';
 import Recipes from './pages/Recipes';
+// import RecipesProvider from './context/RecipesProvider';
 
 function App() {
   return (
+    // <RecipesProvider>
     <Switch>
       <Route exact path="/" component={ Login } />
       <Route exact path="/meals" component={ Recipes } />
@@ -19,6 +21,7 @@ function App() {
       <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
       <Route path="/profile" component={ Profile } />
     </Switch>
+    // </RecipesProvider>
   );
 }
 
