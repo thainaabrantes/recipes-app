@@ -5,19 +5,20 @@ import ProfileIcon from '../images/profileIcon.svg';
 
 function Header() {
   const history = useHistory();
-  const [renderSearch, setRenderSearch] = useState(false);
+  const [renderSearchIcon, setRenderSearchIcon] = useState(false);
+  const [showSearchComponent, setShowSearchComponent] = useState(false);
 
   useEffect(() => {
     const { pathname } = history.location;
     switch (pathname) {
     case '/meals':
-      setRenderSearch(true);
+      setRenderSearchIcon(true);
       break;
     case '/drinks':
-      setRenderSearch(true);
+      setRenderSearchIcon(true);
       break;
     default:
-      setRenderSearch(false);
+      setRenderSearchIcon(false);
     }
   }, [history.location]);
 
@@ -25,15 +26,30 @@ function Header() {
     <header>
       <div>
         <h1 data-testid="page-title">RECIPES app</h1>
-        {// 'Este botão será o componente de pesquisa:'
-          renderSearch
+        {
+          renderSearchIcon
           && (
-            <button src={ Lupa } data-testid="search-top-btn">
+            <button
+              src={ Lupa }
+              data-testid="search-top-btn"
+              onClick={ () => setShowSearchComponent(!showSearchComponent) }
+            >
               <img src={ Lupa } alt="Lupa" />
             </button>
           )
         }
-        <img data-testid="profile-top-btn" src={ ProfileIcon } alt="Usuário" />
+        <button
+          data-testid="profile-top-btn"
+          src={ ProfileIcon }
+          onClick={ () => history.push('/profile') }
+        >
+          <img src={ ProfileIcon } alt="Usuário" />
+        </button>
+      </div>
+      <div>
+        {
+          showSearchComponent && <input data-testid="search-input" />
+        }
       </div>
     </header>
   );
