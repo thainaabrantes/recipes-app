@@ -46,15 +46,8 @@ describe('Teste do Header', () => {
     });
     const buttonSearch = await screen.findByTestId(testIdOfButtonSearch);
     expect(buttonSearch).toBeInTheDocument();
+    userEvent.click(buttonSearch);
   });
-  // it('Testa se o botão search não aparece no Header, quando na rota /profile', () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   act(() => {
-  //     history.push('/profile');
-  //   });
-  //   const buttonSearch = screen.getByTestId(testIdOfButtonSearch);
-  //   expect(buttonSearch).not.toBeInTheDocument();
-  // });
   it('Testa se ao clicar no icone de perfil a rota é redirecionada para /profile', async () => {
     await act(async () => {
       const { history } = renderWithRouter(<App />);
@@ -63,7 +56,6 @@ describe('Teste do Header', () => {
     const profileIcon = await screen.findByTestId('profile-top-btn');
     expect(profileIcon).toBeInTheDocument();
     userEvent.click(profileIcon);
-    // expect(history.location.pathname).toBe('/profile');
   });
   it('Testa se ao clicar no icone search o input de pesquisa é mostrado', async () => {
     await act(async () => {
