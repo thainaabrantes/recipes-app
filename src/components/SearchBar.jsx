@@ -5,7 +5,7 @@ import {
   INGREDIENT_LABEL,
   NAME_LABEL,
   LETTER_LABEL,
-} from '../context/SearchBarProvider';
+} from '../helpers/strings';
 
 function SearchBar() {
   const { setSearchBar } = useContext(SearchBarContext);

@@ -2,18 +2,13 @@ import { useMemo, useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import SearchBarContext from './SearchBarContext';
-
-const INGREDIENT_LABEL = 'Ingredient';
-const NAME_LABEL = 'Name';
-const LETTER_LABEL = 'First letter';
-
-const URL_MEALS = 'https://www.themealdb.com/api/json/v1/1/';
-const URL_COCKTAILS = 'https://www.thecocktaildb.com/api/json/v1/1/';
-
-const INIT_SEARCH = {
-  text: '',
-  radio: INGREDIENT_LABEL,
-};
+import {
+  INGREDIENT_LABEL,
+  NAME_LABEL,
+  URL_MEALS,
+  URL_COCKTAILS,
+  INIT_SEARCH,
+} from '../helpers/strings';
 
 function SearchBarProvider({ children }) {
   const [searchBar, setSearchBar] = useState(INIT_SEARCH);
@@ -80,12 +75,5 @@ function SearchBarProvider({ children }) {
 SearchBarProvider.propTypes = {
   children: propTypes.objectOf(Object),
 }.isRequired;
-
-export {
-  INIT_SEARCH,
-  INGREDIENT_LABEL,
-  NAME_LABEL,
-  LETTER_LABEL,
-};
 
 export default SearchBarProvider;
