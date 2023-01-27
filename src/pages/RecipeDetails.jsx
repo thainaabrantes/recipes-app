@@ -46,7 +46,7 @@ function RecipeDetails() {
               <h4 data-testid="recipe-category">{ recipe.strCategory }</h4>
               <h4>
                 Ingredientes:
-                <ul>
+                <ul data-testid="ingredients-list">
                   {
                     ingredientsCalc().map((ingredient, index) => (
                       <li
@@ -86,6 +86,7 @@ function RecipeDetails() {
                             <img
                               src={ recom.strDrinkThumb }
                               alt={ recom.strDrink }
+                              data-testid="carousel-image"
                             />
                             <h1
                               data-testid={ `${recomendation
@@ -114,7 +115,7 @@ function RecipeDetails() {
               </div>
               <h4>
                 Ingredientes:
-                <ul>
+                <ul data-testid="ingredients-list">
                   {
                     ingredientsCalc().map((ingredient, index) => (
                       <li
