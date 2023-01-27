@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import useRecipeAPI from '../hook/useRecipeAPi';
 import useRecomendAPI from '../hook/useRecomendAPI';
+import BtnStartRecipe from '../components/BtnStartRecipe';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -66,6 +67,7 @@ function RecipeDetails() {
                 src={ recipe.strYoutube }
                 frameBorder="0"
               />
+              <BtnStartRecipe />
               {
                 recomendation === undefined
                   ? (
@@ -127,6 +129,7 @@ function RecipeDetails() {
               </h4>
               <h4> Instruções</h4>
               <p data-testid="instructions">{ recipe.strInstructions }</p>
+              <BtnStartRecipe />
               {
                 recomendation === undefined
                   ? (
