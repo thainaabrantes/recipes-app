@@ -1,8 +1,9 @@
 import React from 'react';
+import '../css/recipeInProgress.css';
 import useRecipeInProgress from '../hook/useRecipeInProgress';
 
 function RecipeInProgress() {
-  const { recipe, ingredients } = useRecipeInProgress();
+  const { recipe, ingredients, handlerClickChecked } = useRecipeInProgress();
 
   return (
     <div>
@@ -19,9 +20,20 @@ function RecipeInProgress() {
           <h4 data-testid="recipe-category">{recipe.strCategory}</h4>
           {ingredients
           && ingredients.map((e, i) => (
-            <label key={ e } data-testid={ `${i}-ingredient-step` } htmlFor={ e }>
-              <input type="checkbox" name={ e } id={ e } />
-              { e }
+            <label
+              className={ `${e.checked && 'scratched'}` }
+              key={ e.str }
+              data-testid={ `${i}-ingredient-step` }
+              htmlFor={ e.str }
+            >
+              <input
+                onChange={ handlerClickChecked }
+                checked={ e.checked }
+                type="checkbox"
+                name={ e.str }
+                id={ e.str }
+              />
+              { e.str }
             </label>
           ))}
           <p data-testid="instructions">{recipe.strInstructions}</p>
