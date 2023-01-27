@@ -13,8 +13,9 @@ function Recipes() {
       setDisplayRecipes([]);
     } else if (results[type] && results[type].length > 1) {
       setDisplayRecipes(results[type]);
-    } else if (results[type] && results[type].length <= 1) {
       console.log('A ALTERAR!');
+    } else if (results[type] && results[type].length <= 1) {
+      setDisplayRecipes(results[type]);
     }
   }, [recipes]);
 
