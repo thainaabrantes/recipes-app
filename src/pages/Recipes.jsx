@@ -43,10 +43,8 @@ function Recipes() {
       fetchCategories();
       if (data.meals) {
         setRecipes(data.meals.slice(0, NUMBER_12));
-        console.log(data.meals.slice(0, NUMBER_12));
       } else {
         setRecipes(data.drinks.slice(0, NUMBER_12));
-        console.log(data.drinks.slice(0, NUMBER_12));
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +85,6 @@ function Recipes() {
       setRecipes([]);
     } else if (results[type] && results[type].length > 1) {
       setRecipes(results[type].slice(0, NUMBER_12));
-      console.log(results[type].slice(0, NUMBER_12));
     } else if (results[type] && results[type].length <= 1) {
       setRecipes(results[type]);
     }
