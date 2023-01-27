@@ -3,10 +3,13 @@ import '../css/recipeInProgress.css';
 import useRecipeInProgress from '../hook/useRecipeInProgress';
 
 function RecipeInProgress() {
-  const { recipe, ingredients, handlerClickChecked } = useRecipeInProgress();
+  const { recipe, ingredients,
+    handlerClickChecked, handlerClickFavorite,
+    alertCopy, isButtonFinishDisabled } = useRecipeInProgress();
 
   return (
     <div>
+      {alertCopy && <p>Link copied!</p>}
       {recipe && (
         <>
           <img
@@ -15,7 +18,14 @@ function RecipeInProgress() {
             alt="foto-receita"
           />
           <h3 data-testid="recipe-title">{recipe.strDrink || recipe.strMeal}</h3>
-          <button data-testid="share-btn" type="button">Compartilhar</button>
+          <button
+            onClick={ handlerClickFavorite }
+            data-testid="share-btn"
+            type="button"
+          >
+            Compartilhar
+
+          </button>
           <button data-testid="favorite-btn" type="button">Favoritar</button>
           <h4 data-testid="recipe-category">{recipe.strCategory}</h4>
           {ingredients
@@ -37,7 +47,14 @@ function RecipeInProgress() {
             </label>
           ))}
           <p data-testid="instructions">{recipe.strInstructions}</p>
-          <button data-testid="finish-recipe-btn" type="button">Finalizar</button>
+          <button
+            disabled={ isButtonFinishDisabled() }
+            data-testid="finish-recipe-btn"
+            type="button"
+          >
+            Finalizar
+
+          </button>
         </>
       )}
     </div>

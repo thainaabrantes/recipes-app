@@ -9,7 +9,6 @@ const useLogin = () => {
     password: '',
   });
   const history = useHistory();
-
   const handlerChange = ({ target }) => {
     setForm({
       ...form,

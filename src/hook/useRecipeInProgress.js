@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { checkLocalStorage, makeFetch, makeListIngredients } from '../services';
 
+const copy = require('clipboard-copy');
+
 const NUMBER_SIX = 6;
 
 const useRecipeInProgress = () => {
@@ -11,6 +13,7 @@ const useRecipeInProgress = () => {
   const [recipe, setRecipe] = useState(null);
   const mealsOrDrink = pathname.slice(1, NUMBER_SIX);
   const [ingredients, setIngredients] = useState(null);
+  const [alertCopy, setAlertCopy] = useState(null);
 
   const fetchRecipe = async () => {
     if (mealsOrDrink === 'meals') {
@@ -60,6 +63,12 @@ const useRecipeInProgress = () => {
     }
   };
 
+  const handlerClickFavorite = async () => {
+    if (mealsOrDrink === 'meals') await copy(`http://localhost:3000/meals/${id}`);
+    if (mealsOrDrink === 'drink') await copy(`http://localhost:3000/drinks/${id}`);
+    setAlertCopy(true);
+  };
+
   useEffect(() => {
     setLocalStorage();
   }, [ingredients]);
@@ -75,10 +84,18 @@ const useRecipeInProgress = () => {
     fetchRecipe();
   }, []);
 
+  const isButtonFinishDisabled = () => {
+    const result = ingredients.some((x) => !x.checked);
+    return result;
+  };
+
   return {
     recipe,
     ingredients,
     handlerClickChecked,
+    handlerClickFavorite,
+    alertCopy,
+    isButtonFinishDisabled,
   };
 };
 
