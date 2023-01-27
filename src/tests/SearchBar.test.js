@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen, act } from '@testing-library/react';
 
-import renderWithRouterRoute from './helpers/renderWithRoutePathname';
+import renderWithRouter from './helpers/renderWithRouter';
 import SearchBarProvider from '../context/SearchBarProvider';
 import SearchBar from '../components/SearchBar';
 import { mockNameAquamarine } from './mocks/mockDrinks';
@@ -16,7 +16,7 @@ const LSR = 'first-letter-search-radio';
 describe('Search Bar - Header: Meals', () => {
   beforeEach(async () => {
     await act(async () => {
-      renderWithRouterRoute(
+      renderWithRouter(
         <SearchBarProvider>
           <SearchBar />
         </SearchBarProvider>,
@@ -60,7 +60,7 @@ describe('Search Bar - Header: Drinks', () => {
       json: () => Promise.resolve(mockNameAquamarine),
     }));
 
-    const { history } = renderWithRouterRoute(
+    const { history } = renderWithRouter(
       <SearchBarProvider>
         <SearchBar />
       </SearchBarProvider>,
