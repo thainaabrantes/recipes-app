@@ -14,15 +14,15 @@ import {
 } from '../helpers/strings';
 
 function SearchBarProvider({ children }) {
-  const [recipes, setRecipes] = useState(INIT_RECIPES);
+  const [searchRecipes, setSearchRecipes] = useState(INIT_RECIPES);
   const [searchBar, setSearchBar] = useState(INIT_SEARCH);
   const history = useHistory();
   const searchMemo = useMemo(() => ({
-    recipes,
+    searchRecipes,
     searchBar,
-    setRecipes,
+    setSearchRecipes,
     setSearchBar,
-  }), [recipes, searchBar]);
+  }), [searchRecipes, searchBar]);
 
   useEffect(() => {
     const { text, radio } = searchBar;
@@ -43,7 +43,7 @@ function SearchBarProvider({ children }) {
         else global.alert(LENGTH_ALERT);
       }
 
-      setRecipes((prev) => ({ ...prev, URL: setURL, type }));
+      setSearchRecipes((prev) => ({ ...prev, URL: setURL, type }));
       return setURL;
     }
 
@@ -57,9 +57,9 @@ function SearchBarProvider({ children }) {
           if (actualURL === null) return null;
           const response = await fetch(actualURL);
           const data = await response.json();
-          setRecipes((prev) => ({ ...prev, results: data }));
+          setSearchRecipes((prev) => ({ ...prev, results: data }));
         } catch {
-          setRecipes((prev) => ({ ...prev, results: null }));
+          setSearchRecipes((prev) => ({ ...prev, results: null }));
         }
       }; fetchAPI();
     }
@@ -68,7 +68,7 @@ function SearchBarProvider({ children }) {
   // REDIRECIONAR À TELA DE DETALHES;
   useEffect(() => {
     const { pathname } = history.location;
-    const { results, type } = recipes;
+    const { results, type } = searchRecipes;
     const ID = type === 'meals' ? 'idMeal' : 'idDrink';
 
     if (results === null || results[type] === null) {
@@ -78,7 +78,7 @@ function SearchBarProvider({ children }) {
     } if (results[type] && results[type].length > 1) {
       return history.push(`${pathname}/${results[type][0][ID]}`);
     }
-  }, [history, recipes]);
+  }, [history, searchRecipes]);
 
   return (
     <SearchBarContext.Provider value={ searchMemo }>

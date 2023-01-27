@@ -3,11 +3,11 @@ import SearchBarContext from '../context/SearchBarContext';
 import { TWELVE } from '../helpers/strings';
 
 function Recipes2() {
-  const { recipes } = useContext(SearchBarContext);
+  const { searchRecipes } = useContext(SearchBarContext);
   const [displayRecipes, setDisplayRecipes] = useState([]);
 
   useEffect(() => {
-    const { results, type } = recipes;
+    const { results, type } = searchRecipes;
 
     if (results === null) {
       setDisplayRecipes([]);
@@ -17,12 +17,12 @@ function Recipes2() {
     } else if (results[type] && results[type].length <= 1) {
       setDisplayRecipes(results[type]);
     }
-  }, [recipes]);
+  }, [searchRecipes]);
 
   return (
     <>
       {displayRecipes.slice(0, TWELVE).map((recipe, index) => {
-        const keyPiece = recipes.type === 'drinks' ? 'Drink' : 'Meal';
+        const keyPiece = searchRecipes.type === 'drinks' ? 'Drink' : 'Meal';
         const keyStr = `str${keyPiece}`;
         const keyThumb = `str${keyPiece}Thumb`;
 
