@@ -46,8 +46,6 @@ function Recipes() {
       } else {
         setRecipes(data.drinks.slice(0, NUMBER_12));
       }
-    } catch (error) {
-      console.log(error);
     } finally {
       setIsLoading(false);
       setIsFiltered(false);
