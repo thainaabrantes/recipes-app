@@ -5,6 +5,7 @@ function Recomend() {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [recomendation, setRecomendation] = useState({});
+  const SIX = 6;
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -15,11 +16,11 @@ function Recomend() {
         if (location.pathname.includes('/meals')) {
           response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
           data = await response.json();
-          setRecomendation(data.drinks);
+          setRecomendation(data.drinks.slice(0, SIX));
         } else {
           response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
           data = await response.json();
-          setRecomendation(data.meals);
+          setRecomendation(data.meals.slice(0, SIX));
         }
       } catch (error) {
         console.log(error);
@@ -33,7 +34,7 @@ function Recomend() {
   if (isLoading) {
     return <p>Carregando...</p>;
   }
-  return (recomendation);
+  return ({ recomendation, isLoading });
 }
 
 export default Recomend;

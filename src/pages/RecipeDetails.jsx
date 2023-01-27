@@ -5,15 +5,13 @@ import useRecomendAPI from '../hook/useRecomendAPI';
 function RecipeDetails() {
   const recipe = useRecipeAPI();
   const location = useLocation();
-  const recomendation = useRecomendAPI();
-
-  console.log(recipe);
+  const { recomendation } = useRecomendAPI();
 
   const ingredientsCalc = () => {
     const arrIngredients = [];
 
     Object.keys(recipe).forEach((key) => {
-      if (key.includes('strIngredient') && recipe[key] !== '') {
+      if (key.includes('strIngredient') && recipe[key] !== '' && recipe[key] !== null) {
         const measureKey = key.replace('Ingredient', 'Measure');
 
         arrIngredients.push(`${recipe[key]} - ${recipe[measureKey]}`);
@@ -59,7 +57,28 @@ function RecipeDetails() {
                 frameBorder="0"
               />
               {
-                console.log(recomendation)
+                recomendation === undefined
+                  ? (
+                    <p>Carregando...</p>
+                  )
+                  : (
+                    <div>
+                      {
+                        recomendation.map((recom, index) => (
+                          <div
+                            key={ recom.idDrink }
+                            data-testid={ `${index}-recommendation-card` }
+                          >
+                            <img src={ recom.strDrinkThumb } alt={ recom.strDrink } />
+                            <h1
+                              data-testid={ `${index}-recommendation-title` }
+                            >
+                              { recom.strDrink }
+                            </h1>
+                          </div>))
+                      }
+                    </div>
+                  )
               }
             </div>
           )
@@ -93,7 +112,28 @@ function RecipeDetails() {
               <h4> Instruções</h4>
               <p data-testid="instructions">{ recipe.strInstructions }</p>
               {
-                console.log(recomendation)
+                recomendation === undefined
+                  ? (
+                    <p>Carregando...</p>
+                  )
+                  : (
+                    <div>
+                      {
+                        recomendation.map((recom, index) => (
+                          <div
+                            key={ recom.idMeal }
+                            data-testid={ `${index}-recommendation-card` }
+                          >
+                            <img src={ recom.strMealThumb } alt={ recom.strMeal } />
+                            <h1
+                              data-testid={ `${index}-recommendation-title` }
+                            >
+                              { recom.strMeal }
+                            </h1>
+                          </div>))
+                      }
+                    </div>
+                  )
               }
             </div>
           )
