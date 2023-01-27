@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 function Card({ index, name, image, id }) {
   const history = useHistory();
   const handlerClickCard = () => {
-    if (history.location.pathname === '/meals') history.push(`/meals/${id}`);
+    if (history.location.pathname === '/meals')history.push(`/meals/${id}`);
     if (history.location.pathname === '/drinks') history.push(`/drinks/${id}`);
   };
 

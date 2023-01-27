@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import SearchBarContext from '../context/SearchBarContext';
 import { TWELVE } from '../helpers/strings';
 
-function Recipes() {
+function Recipes2() {
   const { recipes } = useContext(SearchBarContext);
   const [displayRecipes, setDisplayRecipes] = useState([]);
 
@@ -41,4 +41,4 @@ function Recipes() {
   );
 }
 
-export default Recipes;
+export default Recipes2;
