@@ -1,6 +1,9 @@
 import { useLocation } from 'react-router-dom';
+import Slider from 'react-slick';
 import useRecipeAPI from '../hook/useRecipeAPi';
 import useRecomendAPI from '../hook/useRecomendAPI';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function RecipeDetails() {
   const recipe = useRecipeAPI();
@@ -9,7 +12,6 @@ function RecipeDetails() {
 
   const ingredientsCalc = () => {
     const arrIngredients = [];
-
     Object.keys(recipe).forEach((key) => {
       if (key.includes('strIngredient') && recipe[key] !== '' && recipe[key] !== null) {
         const measureKey = key.replace('Ingredient', 'Measure');
@@ -18,6 +20,14 @@ function RecipeDetails() {
       }
     });
     return arrIngredients;
+  };
+
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
   };
 
   return (
@@ -62,22 +72,28 @@ function RecipeDetails() {
                     <p>Carregando...</p>
                   )
                   : (
-                    <div>
+                    <Slider { ...settings }>
                       {
                         recomendation.map((recom, index) => (
                           <div
                             key={ recom.idDrink }
-                            data-testid={ `${index}-recommendation-card` }
+                            className="item"
+                            data-testid={ `${recomendation
+                              .indexOf(recomendation[index])}-recommendation-card` }
                           >
-                            <img src={ recom.strDrinkThumb } alt={ recom.strDrink } />
+                            <img
+                              src={ recom.strDrinkThumb }
+                              alt={ recom.strDrink }
+                            />
                             <h1
-                              data-testid={ `${index}-recommendation-title` }
+                              data-testid={ `${recomendation
+                                .indexOf(recomendation[index])}-recommendation-title` }
                             >
                               { recom.strDrink }
                             </h1>
                           </div>))
                       }
-                    </div>
+                    </Slider>
                   )
               }
             </div>
@@ -117,22 +133,28 @@ function RecipeDetails() {
                     <p>Carregando...</p>
                   )
                   : (
-                    <div>
+                    <Slider { ...settings }>
                       {
                         recomendation.map((recom, index) => (
                           <div
                             key={ recom.idMeal }
-                            data-testid={ `${index}-recommendation-card` }
+                            className="item"
+                            data-testid={ `${recomendation
+                              .indexOf(recomendation[index])}-recommendation-card` }
                           >
-                            <img src={ recom.strMealThumb } alt={ recom.strMeal } />
+                            <img
+                              src={ recom.strMealThumb }
+                              alt={ recom.strMeal }
+                            />
                             <h1
-                              data-testid={ `${index}-recommendation-title` }
+                              data-testid={ `${recomendation
+                                .indexOf(recomendation[index])}-recommendation-title` }
                             >
                               { recom.strMeal }
                             </h1>
                           </div>))
                       }
-                    </div>
+                    </Slider>
                   )
               }
             </div>
