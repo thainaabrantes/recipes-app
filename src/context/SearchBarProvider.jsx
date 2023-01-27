@@ -76,7 +76,7 @@ function SearchBarProvider({ children }) {
     } if (results[type] && results[type].length === 1) {
       return history.push(`${pathname}/${results[type][0][ID]}`);
     } if (results[type] && results[type].length > 1) {
-      return history.push(`${pathname}/${results[type][0][ID]}`);
+      console.log('Greater than 1');
     }
   }, [history, searchRecipes]);
 
