@@ -71,7 +71,7 @@ const useRecipeInProgress = () => {
 
   useEffect(() => {
     setLocalStorage();
-  }, [ingredients]);
+  }, [ingredients, setLocalStorage]);
 
   const handlerClickChecked = ({ target }) => {
     setIngredients(ingredients.map((e) => {
@@ -82,7 +82,7 @@ const useRecipeInProgress = () => {
 
   useEffect(() => {
     fetchRecipe();
-  }, []);
+  }, [fetchRecipe]);
 
   const isButtonFinishDisabled = () => {
     const result = ingredients.some((x) => !x.checked);

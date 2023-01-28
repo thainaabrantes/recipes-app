@@ -24,7 +24,7 @@ function Header() {
     default:
       setRenderSearchIcon(false);
     }
-  }, []);
+  }, [history.location]);
 
   return (
     <header>
