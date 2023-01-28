@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import SearchBarContext from '../context/SearchBarContext';
 
 const NUMBER_12 = 12;
 const NUMBER_FIVE = 5;
@@ -18,6 +19,7 @@ function Recipes() {
   const location = useLocation();
   const [categories, setCategories] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
+  const { searchRecipes } = useContext(SearchBarContext);
 
   const fetchCategories = async () => {
     if (location.pathname === '/meals') {
@@ -44,8 +46,6 @@ function Recipes() {
       } else {
         setRecipes(data.drinks.slice(0, NUMBER_12));
       }
-    } catch (error) {
-      console.log(error);
     } finally {
       setIsLoading(false);
       setIsFiltered(false);
@@ -75,6 +75,18 @@ function Recipes() {
     }
     fetchRecipes();
   };
+
+  useEffect(() => {
+    const { results, type } = searchRecipes;
+
+    if (results === null) {
+      setRecipes([]);
+    } else if (results[type] && results[type].length > 1) {
+      setRecipes(results[type].slice(0, NUMBER_12));
+    } else if (results[type] && results[type].length <= 1) {
+      console.log('Single!');
+    }
+  }, [searchRecipes]);
 
   const handlerClickAllRecipes = () => {
     fetchRecipes();

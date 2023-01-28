@@ -5,6 +5,7 @@ import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import ProfileIcon from '../images/profileIcon.svg';
 import Lupa from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header() {
   const history = useHistory();
@@ -68,7 +69,7 @@ function Header() {
       </div>
       <div>
         {
-          showSearchComponent && <input data-testid="search-input" />
+          showSearchComponent && <SearchBar />
         }
       </div>
     </header>

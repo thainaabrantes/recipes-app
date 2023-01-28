@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import SearchBarProvider from './context/SearchBarProvider';
 
 ReactDOM
   .createRoot(document.getElementById('root'))
   .render(
     <BrowserRouter>
-      <App />
+      <SearchBarProvider>
+        <App />
+      </SearchBarProvider>
     </BrowserRouter>,
   );
 
