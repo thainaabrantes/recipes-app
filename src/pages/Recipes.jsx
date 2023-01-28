@@ -84,7 +84,7 @@ function Recipes() {
     } else if (results[type] && results[type].length > 1) {
       setRecipes(results[type].slice(0, NUMBER_12));
     } else if (results[type] && results[type].length <= 1) {
-      setRecipes(results[type]);
+      console.log('Single!');
     }
   }, [searchRecipes]);
 
