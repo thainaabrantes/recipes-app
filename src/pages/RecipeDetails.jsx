@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import useRecipeAPI from '../hook/useRecipeAPi';

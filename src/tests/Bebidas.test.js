@@ -4,7 +4,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import ordinaryDrinks from '../../cypress/mocks/ordinaryDrinks';
 import App from '../App';
-import renderWithRouter from './Helpers/renderWithRouter';
+import renderWithRouter from './helpers/renderWithRouter';
 
 describe('Teste da pages /Recipes', () => {
   afterEach(() => {

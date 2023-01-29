@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from './Helpers/renderWithRouter';
+import renderWithRouter from './helpers/renderWithRouter';
 import meals from '../../cypress/mocks/meals';
 import App from '../App';
 

@@ -4,7 +4,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import oneMeal from '../../cypress/mocks/oneMeal';
 import App from '../App';
-import renderWithRouter from './Helpers/renderWithRouter';
+import renderWithRouter from './helpers/renderWithRouter';
 
 describe('Teste da tela de receitas em progresso', () => {
   beforeEach(async () => {
