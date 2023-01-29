@@ -4,6 +4,8 @@ import Slider from 'react-slick';
 import useRecipeAPI from '../hook/useRecipeAPi';
 import useRecomendAPI from '../hook/useRecomendAPI';
 import BtnStartRecipe from '../components/BtnStartRecipe';
+import BtnFavorite from '../components/BtnFavorite';
+import BtnShare from '../components/BtnShare';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -69,6 +71,8 @@ function RecipeDetails() {
                 frameBorder="0"
               />
               <BtnStartRecipe />
+              <BtnShare />
+              <BtnFavorite />
               {
                 recomendation === undefined
                   ? (
@@ -132,6 +136,8 @@ function RecipeDetails() {
               <h4> Instruções</h4>
               <p data-testid="instructions">{ recipe.strInstructions }</p>
               <BtnStartRecipe />
+              <BtnShare />
+              <BtnFavorite />
               {
                 recomendation === undefined
                   ? (
