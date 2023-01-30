@@ -1,13 +1,12 @@
 const receivedRecipes = [{
-  categ: 'drink',
+  id: 'id',
+  type: 'drink',
   alt: 'alt',
   src: 'src',
   name: 'name',
   nationality: 'nationality',
-  alcoholic: true,
+  alcoholicOrNot: true,
   category: 'category',
-  share: 'share',
-  favorite: 'favorite',
 }];
 
 const categButtons = [
@@ -17,13 +16,9 @@ const categButtons = [
 ];
 
 function favoriteRecipes() {
-  const defineCateg = (categ) => {
-    switch (categ) {
-    case 'meal':
-      return `${nationality} - ${category}`;
-    case 'drink':
-    default:
-    }
+  const clipboard = (src) => {
+    Navigator.clipboard(src);
+    global.alert('Link copied!');
   };
 
   const filterButtons = (
@@ -43,32 +38,40 @@ function favoriteRecipes() {
   const elements = (
     <>
       {receivedRecipes.map((receive, index) => {
-        const {
-          categ,
-          alt,
-          src,
-          name,
-          nationality,
-          alcoholic,
-          category,
-          share,
-          favorite,
-        } = receive;
+        const { id, type, nationality, category, alcoholicOrNot, name, image } = receive;
 
         let text;
-        if (categ === 'meal') {
+        if (type === 'meal') {
           text = `${nationality} - ${category}`;
         } else {
-          text = alcoholic ? 'Alcoholic' : 'Non-alcoholic';
+          text = alcoholicOrNot ? 'Alcoholic' : 'Non-alcoholic';
         }
 
         return (
-          <div key={ src }>
-            <img src={ src } alt={ alt } data-testid={ `${index}-horizontal-image` } />
+          <div key={ id }>
+            <img
+              src={ image }
+              alt={ `${name}` }
+              data-testid={ `${index}-horizontal-image` }
+            />
+
             <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
             <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
-            <button data-testid={ `${index}-horizontal-share-btn` }>{share}</button>
-            <button data-testid={ `${index}-horizontal-favorite-btn` }>{favorite}</button>
+
+            <button
+              type="button"
+              onClick={ () => clipboard(src) }
+              data-testid={ `${index}-horizontal-share-btn` }
+            >
+              {share}
+            </button>
+
+            <button
+              type="button"
+              data-testid={ `${index}-horizontal-favorite-btn` }
+            >
+              {favorite}
+            </button>
           </div>
         );
       })}
