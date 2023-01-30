@@ -1,8 +1,11 @@
 const receivedRecipes = [{
+  categ: 'drink',
   alt: 'alt',
   src: 'src',
-  text: 'text',
   name: 'name',
+  nationality: 'nationality',
+  alcoholic: true,
+  category: 'category',
   share: 'share',
   favorite: 'favorite',
 }];
@@ -14,6 +17,15 @@ const categButtons = [
 ];
 
 function favoriteRecipes() {
+  const defineCateg = (categ) => {
+    switch (categ) {
+    case 'meal':
+      return `${nationality} - ${category}`;
+    case 'drink':
+    default:
+    }
+  };
+
   const filterButtons = (
     <>
       {categButtons.map(({ title, categ }) => (
@@ -30,15 +42,36 @@ function favoriteRecipes() {
 
   const elements = (
     <>
-      {receivedRecipes.map(({ alt, src, text, name, share, favorite }, index) => (
-        <div key={ src }>
-          <img src={ src } alt={ alt } data-testid={ `${index}-horizontal-image` } />
-          <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
-          <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
-          <button data-testid={ `${index}-horizontal-share-btn` }>{share}</button>
-          <button data-testid={ `${index}-horizontal-favorite-btn` }>{favorite}</button>
-        </div>
-      ))}
+      {receivedRecipes.map((receive, index) => {
+        const {
+          categ,
+          alt,
+          src,
+          name,
+          nationality,
+          alcoholic,
+          category,
+          share,
+          favorite,
+        } = receive;
+
+        let text;
+        if (categ === 'meal') {
+          text = `${nationality} - ${category}`;
+        } else {
+          text = alcoholic ? 'Alcoholic' : 'Non-alcoholic';
+        }
+
+        return (
+          <div key={ src }>
+            <img src={ src } alt={ alt } data-testid={ `${index}-horizontal-image` } />
+            <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
+            <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
+            <button data-testid={ `${index}-horizontal-share-btn` }>{share}</button>
+            <button data-testid={ `${index}-horizontal-favorite-btn` }>{favorite}</button>
+          </div>
+        );
+      })}
     </>
   );
 
