@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
+import { useLocation } from 'react-router-dom';
 import useRecipeAPI from '../hook/useRecipeAPi';
 import useRecomendAPI from '../hook/useRecomendAPI';
 import BtnStartRecipe from '../components/BtnStartRecipe';
@@ -10,17 +10,18 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 function RecipeDetails() {
-  const recipe = useRecipeAPI();
-  const location = useLocation();
+  const { recipes, isLoading, typeFood } = useRecipeAPI();
   const { recomendation } = useRecomendAPI();
+  const location = useLocation();
 
   const ingredientsCalc = () => {
     const arrIngredients = [];
-    Object.keys(recipe).forEach((key) => {
-      if (key.includes('strIngredient') && recipe[key] !== '' && recipe[key] !== null) {
+    Object.keys(recipes.recipe).forEach((key) => {
+      if (key.includes('strIngredient') && recipes.recipe[key] !== ''
+        && recipes.recipe[key] !== null) {
         const measureKey = key.replace('Ingredient', 'Measure');
 
-        arrIngredients.push(`${recipe[key]} - ${recipe[measureKey]}`);
+        arrIngredients.push(`${recipes.recipe[key]} - ${recipes.recipe[measureKey]}`);
       }
     });
     return arrIngredients;
@@ -37,16 +38,17 @@ function RecipeDetails() {
   return (
     <div>
       {
-        location.pathname.includes('/meals')
+        !isLoading && location.pathname.includes('/meals')
+
           ? (
             <div>
               <img
                 data-testid="recipe-photo"
-                src={ recipe.strMealThumb }
-                alt={ recipe.strMeal }
+                src={ recipes.recipe.strMealThumb }
+                alt={ recipes.recipe.strMeal }
               />
-              <h1 data-testid="recipe-title">{ recipe.strMeal }</h1>
-              <h4 data-testid="recipe-category">{ recipe.strCategory }</h4>
+              <h1 data-testid="recipe-title">{ recipes.recipe.strMeal }</h1>
+              <h4 data-testid="recipe-category">{ recipes.recipe.strCategory }</h4>
               <h4>
                 Ingredientes:
                 <ul data-testid="ingredients-list">
@@ -63,14 +65,14 @@ function RecipeDetails() {
                 </ul>
               </h4>
               <h4> Instruções</h4>
-              <p data-testid="instructions">{ recipe.strInstructions }</p>
+              <p data-testid="instructions">{ recipes.recipe.strInstructions }</p>
               <iframe
                 data-testid="video"
-                title={ recipe.strMeal }
-                src={ recipe.strYoutube }
+                title={ recipes.recipe.strMeal }
+                src={ recipes.recipe.strYoutube }
                 frameBorder="0"
               />
-              <BtnStartRecipe />
+              <BtnStartRecipe id={ recipes.id } typeFood={ typeFood } />
               <BtnShare />
               <BtnFavorite />
               {
@@ -110,12 +112,12 @@ function RecipeDetails() {
             <div>
               <img
                 data-testid="recipe-photo"
-                src={ recipe.strDrinkThumb }
-                alt={ recipe.strDrink }
+                src={ recipes.recipe.strDrinkThumb }
+                alt={ recipes.recipe.strDrink }
               />
-              <h1 data-testid="recipe-title">{ recipe.strDrink }</h1>
+              <h1 data-testid="recipe-title">{ recipes.recipe.strDrink }</h1>
               <div data-testid="recipe-category">
-                { `${recipe.strCategory}: ${recipe.strAlcoholic}` }
+                { `${recipes.recipe.strCategory}: ${recipes.recipe.strAlcoholic}` }
 
               </div>
               <h4>
@@ -125,7 +127,7 @@ function RecipeDetails() {
                     ingredientsCalc().map((ingredient, index) => (
                       <li
                         data-testid={ `${index}-ingredient-name-and-measure` }
-                        key={ ingredient }
+                        key={ `${ingredient}-${index}` }
                       >
                         { ingredient }
                       </li>
@@ -134,8 +136,8 @@ function RecipeDetails() {
                 </ul>
               </h4>
               <h4> Instruções</h4>
-              <p data-testid="instructions">{ recipe.strInstructions }</p>
-              <BtnStartRecipe />
+              <p data-testid="instructions">{ recipes.recipe.strInstructions }</p>
+              <BtnStartRecipe id={ recipes.id } typeFood={ typeFood } />
               <BtnShare />
               <BtnFavorite />
               {
