@@ -7,7 +7,7 @@ import whiteHeart from '../images/whiteHeartIcon.svg';
 function RecipeInProgress() {
   const { recipe, ingredients,
     handlerClickChecked, handlerClickFavorite,
-    alertCopy, isButtonFinishDisabled } = useRecipeInProgress();
+    alertCopy, isButtonFinishDisabled, handlerClickFinish } = useRecipeInProgress();
   const [favorite, setFavorite] = useState(false);
 
   const handlerFavorite = () => {
@@ -106,9 +106,9 @@ function RecipeInProgress() {
             disabled={ isButtonFinishDisabled() }
             data-testid="finish-recipe-btn"
             type="button"
+            onClick={ handlerClickFinish }
           >
             Finalizar
-
           </button>
         </>
       )}

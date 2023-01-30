@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { checkLocalStorage, makeFetch, makeListIngredients } from '../services';
 
 const copy = require('clipboard-copy');
@@ -13,6 +13,7 @@ const useRecipeInProgress = () => {
   const mealsOrDrink = pathname.slice(1, NUMBER_SIX);
   const [ingredients, setIngredients] = useState(null);
   const [alertCopy, setAlertCopy] = useState(null);
+  const history = useHistory();
 
   const handlerClickFavorite = async () => {
     if (mealsOrDrink === 'meals') await copy(`http://localhost:3000/meals/${id}`);
@@ -86,6 +87,44 @@ const useRecipeInProgress = () => {
     fetchRecipe();
   }, [id, mealsOrDrink, setRecipe]);
 
+  const handlerClickFinish = () => {
+    if (recipe) {
+      let tags = [];
+      if (recipe.strTags) tags = [...recipe.strTags.split(',')];
+      if (!localStorage.getItem('doneRecipes')) {
+        const obj = [{
+          id,
+          type: Object.keys(recipe)[0].slice(2).toLowerCase(),
+          nationality: recipe.strArea || '',
+          category: recipe.strCategory,
+          alcoholicOrNot: recipe.strAlcoholic || '',
+          name: recipe.strMeal || recipe.strDrink,
+          image: recipe.strMealThumb || recipe.strDrinkThumb,
+          doneDate: new Date().toISOString(),
+          tags,
+        }];
+        localStorage.setItem('doneRecipes', JSON.stringify(obj));
+        history.push('/done-recipes');
+        return;
+      }
+      const dones = JSON.parse(localStorage.getItem('doneRecipes'));
+      const obj = {
+        id,
+        type: Object.keys(recipe)[0].slice(2).toLowerCase(),
+        nationality: recipe.strArea || '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic || '',
+        name: recipe.strMeal || recipe.strDrink,
+        image: recipe.strMealThumb || recipe.strDrinkThumb,
+        doneDate: (new Date()).toISOString(),
+        tags,
+      };
+      dones.push(obj);
+      localStorage.setItem('doneRecipes', JSON.stringify(dones));
+      history.push('/done-recipes');
+    }
+  };
+
   return {
     recipe,
     ingredients,
@@ -93,6 +132,7 @@ const useRecipeInProgress = () => {
     handlerClickFavorite,
     alertCopy,
     isButtonFinishDisabled,
+    handlerClickFinish,
   };
 };
 
