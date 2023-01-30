@@ -88,8 +88,6 @@ describe('Testa a pagina Recipe Details', () => {
       name: /drinks icon/i,
     });
 
-    console.log(btnDrinks);
-
     act(() => {
       userEvent.click(btnDrinks);
     });
