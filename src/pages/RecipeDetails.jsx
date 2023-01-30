@@ -10,18 +10,20 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 function RecipeDetails() {
-  const { recipes, isLoading, typeFood } = useRecipeAPI();
+  const { recipes, typeFood, alertCopy,
+    handlerClickFavorite } = useRecipeAPI();
+  const { recipe, id } = recipes;
   const { recomendation } = useRecomendAPI();
   const location = useLocation();
 
   const ingredientsCalc = () => {
     const arrIngredients = [];
-    Object.keys(recipes.recipe).forEach((key) => {
-      if (key.includes('strIngredient') && recipes.recipe[key] !== ''
-        && recipes.recipe[key] !== null) {
+    Object.keys(recipe).forEach((key) => {
+      if (key.includes('strIngredient') && recipe[key] !== ''
+        && recipe[key] !== null) {
         const measureKey = key.replace('Ingredient', 'Measure');
 
-        arrIngredients.push(`${recipes.recipe[key]} - ${recipes.recipe[measureKey]}`);
+        arrIngredients.push(`${recipe[key]} - ${recipe[measureKey]}`);
       }
     });
     return arrIngredients;
@@ -38,17 +40,17 @@ function RecipeDetails() {
   return (
     <div>
       {
-        !isLoading && location.pathname.includes('/meals')
+        location.pathname.includes('/meals')
 
           ? (
             <div>
               <img
                 data-testid="recipe-photo"
-                src={ recipes.recipe.strMealThumb }
-                alt={ recipes.recipe.strMeal }
+                src={ recipe.strMealThumb }
+                alt={ recipe.strMeal }
               />
-              <h1 data-testid="recipe-title">{ recipes.recipe.strMeal }</h1>
-              <h4 data-testid="recipe-category">{ recipes.recipe.strCategory }</h4>
+              <h1 data-testid="recipe-title">{ recipe.strMeal }</h1>
+              <h4 data-testid="recipe-category">{ recipe.strCategory }</h4>
               <h4>
                 Ingredientes:
                 <ul data-testid="ingredients-list">
@@ -65,15 +67,20 @@ function RecipeDetails() {
                 </ul>
               </h4>
               <h4> Instruções</h4>
-              <p data-testid="instructions">{ recipes.recipe.strInstructions }</p>
+              <p data-testid="instructions">{ recipe.strInstructions }</p>
               <iframe
                 data-testid="video"
-                title={ recipes.recipe.strMeal }
-                src={ recipes.recipe.strYoutube }
+                title={ recipe.strMeal }
+                src={ recipe.strYoutube }
                 frameBorder="0"
               />
-              <BtnStartRecipe id={ recipes.id } typeFood={ typeFood } />
-              <BtnShare />
+              <BtnStartRecipe id={ id } typeFood={ typeFood } />
+              <BtnShare
+                id={ id }
+                typeFood={ typeFood }
+                handlerClickFavorite={ handlerClickFavorite }
+              />
+              {alertCopy && <p>Link copied!</p>}
               <BtnFavorite />
               {
                 recomendation === undefined
@@ -112,12 +119,12 @@ function RecipeDetails() {
             <div>
               <img
                 data-testid="recipe-photo"
-                src={ recipes.recipe.strDrinkThumb }
-                alt={ recipes.recipe.strDrink }
+                src={ recipe.strDrinkThumb }
+                alt={ recipe.strDrink }
               />
-              <h1 data-testid="recipe-title">{ recipes.recipe.strDrink }</h1>
+              <h1 data-testid="recipe-title">{ recipe.strDrink }</h1>
               <div data-testid="recipe-category">
-                { `${recipes.recipe.strCategory}: ${recipes.recipe.strAlcoholic}` }
+                { `${recipe.strCategory}: ${recipe.strAlcoholic}` }
 
               </div>
               <h4>
@@ -136,9 +143,14 @@ function RecipeDetails() {
                 </ul>
               </h4>
               <h4> Instruções</h4>
-              <p data-testid="instructions">{ recipes.recipe.strInstructions }</p>
-              <BtnStartRecipe id={ recipes.id } typeFood={ typeFood } />
-              <BtnShare />
+              <p data-testid="instructions">{ recipe.strInstructions }</p>
+              <BtnStartRecipe id={ id } typeFood={ typeFood } />
+              <BtnShare
+                id={ id }
+                typeFood={ typeFood }
+                handlerClickFavorite={ handlerClickFavorite }
+              />
+              {alertCopy && <p>Link copied!</p>}
               <BtnFavorite />
               {
                 recomendation === undefined
