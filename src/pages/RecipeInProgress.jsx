@@ -3,6 +3,7 @@ import '../css/recipeInProgress.css';
 import useRecipeInProgress from '../hook/useRecipeInProgress';
 import blackHeart from '../images/blackHeartIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function RecipeInProgress() {
   const { recipe, ingredients,
@@ -70,7 +71,7 @@ function RecipeInProgress() {
             data-testid="share-btn"
             type="button"
           >
-            Compartilhar
+            <img src={ shareIcon } alt="share icon" />
           </button>
           {alertCopy && <p>Link copied!</p>}
           <button
