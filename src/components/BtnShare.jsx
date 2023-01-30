@@ -2,15 +2,14 @@ import React from 'react';
 import shareIcon from '../images/shareIcon.svg';
 
 function BtnShare(props) {
-  const { handlerClickFavorite } = props;
+  const { handlerClickCopy } = props;
 
   return (
     <button
       type="button"
-      onClick={ handlerClickFavorite }
+      onClick={ handlerClickCopy }
       data-testid="share-btn"
     >
-      Compartilhe
       <img src={ shareIcon } alt="share icon" />
     </button>
   );

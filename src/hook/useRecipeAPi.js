@@ -12,7 +12,7 @@ function Recipe() {
 
   const pageId = location.pathname.match(/\d+$/)[0];
 
-  const handlerClickFavorite = async () => {
+  const handlerClickCopy = async () => {
     if (typeFood === 'meals') await copy(`http://localhost:3000/meals/${pageId}`);
     if (typeFood === 'drinks') await copy(`http://localhost:3000/drinks/${pageId}`);
     setAlertCopy(true);
@@ -46,7 +46,7 @@ function Recipe() {
     fetchRecipe();
   }, [pageId, location.pathname]);
 
-  return ({ recipes, isLoading, typeFood, alertCopy, handlerClickFavorite });
+  return ({ recipes, isLoading, typeFood, alertCopy, handlerClickCopy });
 }
 
 export default Recipe;

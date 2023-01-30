@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { useLocation } from 'react-router-dom';
 import useRecipeAPI from '../hook/useRecipeAPi';
 import useRecomendAPI from '../hook/useRecomendAPI';
+import useLocalStorage from '../hook/useLocalStorage';
 import BtnStartRecipe from '../components/BtnStartRecipe';
 import BtnFavorite from '../components/BtnFavorite';
 import BtnShare from '../components/BtnShare';
@@ -11,10 +12,11 @@ import 'slick-carousel/slick/slick-theme.css';
 
 function RecipeDetails() {
   const { recipes, typeFood, alertCopy,
-    handlerClickFavorite } = useRecipeAPI();
+    handlerClickCopy } = useRecipeAPI();
   const { recipe, id } = recipes;
   const { recomendation } = useRecomendAPI();
   const location = useLocation();
+  const { handlerFavorite, favorite } = useLocalStorage(recipe);
 
   const ingredientsCalc = () => {
     const arrIngredients = [];
@@ -78,10 +80,13 @@ function RecipeDetails() {
               <BtnShare
                 id={ id }
                 typeFood={ typeFood }
-                handlerClickFavorite={ handlerClickFavorite }
+                handlerClickCopy={ handlerClickCopy }
               />
               {alertCopy && <p>Link copied!</p>}
-              <BtnFavorite />
+              <BtnFavorite
+                handlerFavorite={ handlerFavorite }
+                favorite={ favorite }
+              />
               {
                 recomendation === undefined
                   ? (
@@ -148,10 +153,13 @@ function RecipeDetails() {
               <BtnShare
                 id={ id }
                 typeFood={ typeFood }
-                handlerClickFavorite={ handlerClickFavorite }
+                handlerClickCopy={ handlerClickCopy }
               />
               {alertCopy && <p>Link copied!</p>}
-              <BtnFavorite />
+              <BtnFavorite
+                handlerFavorite={ handlerFavorite }
+                favorite={ favorite }
+              />
               {
                 recomendation === undefined
                   ? (
