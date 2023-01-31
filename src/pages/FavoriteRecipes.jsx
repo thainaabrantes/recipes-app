@@ -1,13 +1,5 @@
-const receivedRecipes = [{
-  id: 'id',
-  type: 'drink',
-  alt: 'alt',
-  src: 'src',
-  name: 'name',
-  nationality: 'nationality',
-  alcoholicOrNot: true,
-  category: 'category',
-}];
+import { useState, useEffect } from 'react';
+import Header from '../components/Header';
 
 const categButtons = [
   { title: 'All', categ: 'all' },
@@ -15,7 +7,13 @@ const categButtons = [
   { title: 'Drinks', categ: 'drink' },
 ];
 
-function favoriteRecipes() {
+function FavoriteRecipes() {
+  const [receivedRecipes, setReceivedRecipes] = useState([]);
+
+  useEffect(() => {
+    setReceivedRecipes(localStorage.getItem('favoriteRecipes'));
+  }, []);
+
   const clipboard = (src) => {
     Navigator.clipboard(src);
     global.alert('Link copied!');
@@ -40,18 +38,14 @@ function favoriteRecipes() {
       {receivedRecipes.map((receive, index) => {
         const { id, type, nationality, category, alcoholicOrNot, name, image } = receive;
 
-        let text;
-        if (type === 'meal') {
-          text = `${nationality} - ${category}`;
-        } else {
-          text = alcoholicOrNot ? 'Alcoholic' : 'Non-alcoholic';
-        }
+        let text = alcoholicOrNot;
+        if (type === 'meal') text = `${nationality} - ${category}`;
 
         return (
           <div key={ id }>
             <img
               src={ image }
-              alt={ `${name}` }
+              alt={ name }
               data-testid={ `${index}-horizontal-image` }
             />
 
@@ -60,17 +54,17 @@ function favoriteRecipes() {
 
             <button
               type="button"
-              onClick={ () => clipboard(src) }
+              onClick={ () => clipboard(image) }
               data-testid={ `${index}-horizontal-share-btn` }
             >
-              {share}
+              Share
             </button>
 
             <button
               type="button"
               data-testid={ `${index}-horizontal-favorite-btn` }
             >
-              {favorite}
+              Disfavorite
             </button>
           </div>
         );
@@ -80,10 +74,13 @@ function favoriteRecipes() {
 
   return (
     <>
+      <Header />
+      <img src={ heartIcon } alt="Heart" />
+      <h1 data-testid="page-title">Favorite Recipes</h1>
       {filterButtons}
       {elements}
     </>
   );
 }
 
-export default favoriteRecipes;
+export default FavoriteRecipes;
