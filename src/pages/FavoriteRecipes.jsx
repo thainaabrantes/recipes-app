@@ -60,13 +60,16 @@ function FavoriteRecipes() {
 
           return (
             <li key={ id }>
-              <img
-                src={ image }
-                alt={ name }
-                data-testid={ `${index}-horizontal-image` }
-              />
+              <a href={ URL }>
+                <img
+                  style={ { width: '200px' } }
+                  src={ image }
+                  alt={ name }
+                  data-testid={ `${index}-horizontal-image` }
+                />
+                <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
+              </a>
 
-              <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
               <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
 
               <FavButtons
