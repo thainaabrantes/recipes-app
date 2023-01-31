@@ -4,10 +4,11 @@ import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
 import oneMeal from '../../cypress/mocks/oneMeal';
-// import meals from '../../cypress/mocks/meals';
 import oneDrinkId15997 from '../../cypress/mocks/oneDrinkId15997';
 import RecipeDetails from '../pages/RecipeDetails';
 import App from '../App';
+import drinks from '../../cypress/mocks/drinks';
+import meals from '../../cypress/mocks/meals';
 
 describe('Teste da tela de receitas em progresso', () => {
   afterEach(() => {
@@ -18,16 +19,14 @@ describe('Teste da tela de receitas em progresso', () => {
   const URL_DRINKS = '/drinks/15997';
 
   it('Se os elementos aparecem na tela com Meal', async () => {
-    await act(async () => {
-      global.fetch = jest.fn(() => Promise.resolve({
-        json: () => Promise.resolve(oneMeal),
-      }));
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(oneMeal),
+    }));
 
-      renderWithRouter(
-        <RecipeDetails />,
-        URL_MEALS,
-      );
-    });
+    renderWithRouter(
+      <RecipeDetails />,
+      URL_MEALS,
+    );
 
     const photo = screen.getByRole('img', {
       name: /spicy arrabiata penne/i,
@@ -51,17 +50,37 @@ describe('Teste da tela de receitas em progresso', () => {
       && video && btnStart && btnShare && btnFav).toBeDefined();
   });
 
-  it('Se o botão Favorite fuciona com Meal', async () => {
-    await act(async () => {
-      global.fetch = jest.fn(() => Promise.resolve({
-        json: () => Promise.resolve(oneMeal),
-      }));
+  it('Se o botão Share fuciona com Meal', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(oneMeal),
+    }));
 
-      renderWithRouter(
-        <RecipeDetails />,
-        URL_MEALS,
-      );
+    renderWithRouter(
+      <RecipeDetails />,
+      URL_MEALS,
+    );
+
+    const btnshare = screen.getByRole('img', { name: /share icon/i });
+
+    expect(btnshare).toBeDefined();
+
+    act(() => {
+      userEvent.click(btnshare);
     });
+
+    const copy = screen.getByText(/link copied!/i);
+    expect(copy).toBeDefined();
+  });
+
+  it('Se o botão Favorite fuciona com Meal', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(oneMeal),
+    }));
+
+    renderWithRouter(
+      <RecipeDetails />,
+      URL_MEALS,
+    );
     const btnFavBefore = screen.getByRole('img', {
       name: /favoriteicon/i,
     });
@@ -97,11 +116,9 @@ describe('Teste da tela de receitas em progresso', () => {
   });
 
   it('Se o botão Start Recipe fuciona com Meal', async () => {
-    await act(async () => {
-      global.fetch = jest.fn(() => Promise.resolve({
-        json: () => Promise.resolve(oneMeal),
-      }));
-    });
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(oneMeal),
+    }));
     const { history } = renderWithRouter(
       <App />,
       URL_MEALS,
@@ -120,16 +137,14 @@ describe('Teste da tela de receitas em progresso', () => {
   });
 
   it('Se os elementos aparecem na tela com Drink', async () => {
-    await act(async () => {
-      global.fetch = jest.fn(() => Promise.resolve({
-        json: () => Promise.resolve(oneDrinkId15997),
-      }));
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(oneDrinkId15997),
+    }));
 
-      renderWithRouter(
-        <RecipeDetails />,
-        URL_DRINKS,
-      );
-    });
+    renderWithRouter(
+      <RecipeDetails />,
+      URL_DRINKS,
+    );
 
     const photo = screen.getByRole('img', {
       name: /gg/i,
@@ -149,7 +164,65 @@ describe('Teste da tela de receitas em progresso', () => {
       && btnStart && btnShare && btnFav).toBeDefined();
   });
 
-  it('Se o o carousel funciona', async () => {
+  it('Se o carousel funciona em Meal', async () => {
+    global.fetch = jest.fn((url) => Promise.resolve({
+      json: jest.fn()
+        .mockResolvedValue(url.includes('/meals') ? oneMeal : drinks),
+    }));
 
+    renderWithRouter(
+      <RecipeDetails />,
+      URL_MEALS,
+    );
+
+    const card0 = await screen.findByRole('img', {
+      name: /gg/i,
+    });
+    const card1 = await screen.findByRole('img', {
+      name: /a1/i,
+    });
+    expect(card0 && card1).toBeDefined();
+  });
+
+  it('Se o carousel funciona em Drink', async () => {
+    global.fetch = jest.fn((url) => Promise.resolve({
+      json: jest.fn()
+        .mockResolvedValue(url.includes('/drinks') ? oneDrinkId15997 : meals),
+    }));
+
+    renderWithRouter(
+      <RecipeDetails />,
+      URL_DRINKS,
+    );
+
+    const card0 = await screen.findByRole('img', {
+      name: /corba/i,
+    });
+    const card1 = await screen.findByRole('img', {
+      name: /burek/i,
+    });
+    expect(card0 && card1).toBeDefined();
+  });
+
+  it('Se o botão Share fuciona com Drink', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(oneDrinkId15997),
+    }));
+
+    renderWithRouter(
+      <RecipeDetails />,
+      URL_DRINKS,
+    );
+
+    const btnshare = screen.getByRole('img', { name: /share icon/i });
+
+    expect(btnshare).toBeDefined();
+
+    act(() => {
+      userEvent.click(btnshare);
+    });
+
+    const copy = screen.getByText(/link copied!/i);
+    expect(copy).toBeDefined();
   });
 });
