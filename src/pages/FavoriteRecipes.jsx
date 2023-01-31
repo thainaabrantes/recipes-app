@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import FavButtons from '../components/FavButtons';
 import Header from '../components/Header';
-import heartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
+// import heartIcon from '../images/blackHeartIcon.svg';
 
 const categButtons = [
   { title: 'All', categ: 'all' },
@@ -11,18 +11,11 @@ const categButtons = [
 
 function FavoriteRecipes() {
   const [receivedRecipes, setReceivedRecipes] = useState([]);
-  const [copied, setCopied] = useState({ is: false, from: 0 });
 
   useEffect(() => {
     const answer = localStorage.getItem('favoriteRecipes');
     setReceivedRecipes(JSON.parse(answer));
   }, []);
-
-  const clipboard = (id, type, index) => {
-    const link = `http://localhost:3000/${type}s/${id}`;
-    navigator.clipboard.writeText(link)
-      .then(setCopied({ is: true, from: index }));
-  };
 
   const filterButtons = (
     <div>
@@ -42,6 +35,7 @@ function FavoriteRecipes() {
     <ul>
       {receivedRecipes.map((receive, index) => {
         const { id, type, nationality, category, alcoholicOrNot, name, image } = receive;
+        const URL = `http://localhost:3000/${type}s/${id}`;
 
         let text = alcoholicOrNot;
         if (type === 'meal') text = `${nationality} - ${category}`;
@@ -57,22 +51,7 @@ function FavoriteRecipes() {
             <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
             <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
 
-            <input
-              type="image"
-              src={ shareIcon }
-              alt="Share Icon"
-              onClick={ () => clipboard(id, type, index) }
-              data-testid={ `${index}-horizontal-share-btn` }
-            />
-
-            {copied.is && copied.from === index ? <p>Link copied!</p> : ''}
-
-            <input
-              type="image"
-              src={ heartIcon }
-              alt="Heart Icon"
-              data-testid={ `${index}-horizontal-favorite-btn` }
-            />
+            <FavButtons index={ index } URL={ URL } />
           </li>
         );
       })}
@@ -82,7 +61,7 @@ function FavoriteRecipes() {
   return (
     <>
       <Header />
-      <img src={ heartIcon } alt="Heart" />
+      {/* <img src={ heartIcon } alt="Heart" /> */}
       <h1 data-testid="page-title">Favorite Recipes</h1>
       {filterButtons}
       {elements}
