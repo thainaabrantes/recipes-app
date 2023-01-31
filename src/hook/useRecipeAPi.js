@@ -46,7 +46,7 @@ function Recipe() {
     fetchRecipe();
   }, [pageId, location.pathname]);
 
-  return ({ recipes, isLoading, typeFood, alertCopy, handlerClickCopy });
+  return ({ recipes, isLoading, typeFood, pageId, alertCopy, handlerClickCopy });
 }
 
 export default Recipe;

@@ -130,7 +130,6 @@ function RecipeDetails() {
               <h1 data-testid="recipe-title">{ recipe.strDrink }</h1>
               <div data-testid="recipe-category">
                 { `${recipe.strCategory}: ${recipe.strAlcoholic}` }
-
               </div>
               <h4>
                 Ingredientes:
