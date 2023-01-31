@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 function Recomend() {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  const [recomendation, setRecomendation] = useState({});
+  const [recomendation, setRecomendation] = useState([]);
   const SIX = 6;
 
   useEffect(() => {
