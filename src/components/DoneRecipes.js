@@ -66,6 +66,7 @@ function DoneRecipes() {
             to={ `/${e.type}s/${e.id}` }
           >
             <img
+              style={ { width: '200px', height: '200px' } }
               data-testid={ `${i}-horizontal-image` }
               src={ e.image }
               alt="imageRecipe"
