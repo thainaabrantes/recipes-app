@@ -28,23 +28,23 @@ describe('Teste da tela de receitas em progresso', () => {
       URL_MEALS,
     );
 
-    const photo = screen.getByRole('img', {
+    const photo = await screen.findByRole('img', {
       name: /spicy arrabiata penne/i,
     });
-    const heading = screen.getByRole('heading', {
+    const heading = await screen.findByRole('heading', {
       name: /spicy arrabiata penne/i,
       level: 1,
     });
-    const category = screen.getByRole('heading', {
+    const category = await screen.findByRole('heading', {
       name: /vegetarian/i,
       level: 4,
     });
-    const ingredients = screen.getByRole('heading', { name: /ingredientes: penne rigate - 1 pound olive oil - 1\/4 cup garlic - 3 cloves chopped tomatoes - 1 tin red chile flakes - 1\/2 teaspoon italian seasoning - 1\/2 teaspoon basil - 6 leaves parmigiano-reggiano - spinkling/i });
-    const instructions = screen.getByTestId('instructions');
-    const video = screen.getByTestId('video');
-    const btnStart = screen.getByTestId('start-recipe-btn');
-    const btnShare = screen.getByTestId('share-btn');
-    const btnFav = screen.getByTestId('favorite-btn');
+    const ingredients = await screen.findByRole('heading', { name: /ingredientes: penne rigate - 1 pound olive oil - 1\/4 cup garlic - 3 cloves chopped tomatoes - 1 tin red chile flakes - 1\/2 teaspoon italian seasoning - 1\/2 teaspoon basil - 6 leaves parmigiano-reggiano - spinkling/i });
+    const instructions = await screen.findByTestId('instructions');
+    const video = await screen.findByTestId('video');
+    const btnStart = await screen.findByTestId('start-recipe-btn');
+    const btnShare = await screen.findByTestId('share-btn');
+    const btnFav = await screen.findByTestId('favorite-btn');
 
     expect(photo && heading && category && ingredients && instructions
       && video && btnStart && btnShare && btnFav).toBeDefined();
@@ -60,7 +60,7 @@ describe('Teste da tela de receitas em progresso', () => {
       URL_MEALS,
     );
 
-    const btnshare = screen.getByRole('img', { name: /share icon/i });
+    const btnshare = await screen.findByRole('img', { name: /share icon/i });
 
     expect(btnshare).toBeDefined();
 
@@ -68,19 +68,21 @@ describe('Teste da tela de receitas em progresso', () => {
       userEvent.click(btnshare);
     });
 
-    const copy = screen.getByText(/link copied!/i);
+    const copy = await screen.findByText(/link copied!/i);
     expect(copy).toBeDefined();
   });
 
   it('Se o botão Favorite fuciona com Meal', async () => {
-    global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(oneMeal),
-    }));
+    await act(async () => {
+      global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(oneMeal),
+      }));
+      renderWithRouter(
+        <RecipeDetails />,
+        URL_MEALS,
+      );
+    });
 
-    renderWithRouter(
-      <RecipeDetails />,
-      URL_MEALS,
-    );
     const btnFavBefore = screen.getByRole('img', {
       name: /favoriteicon/i,
     });
@@ -137,14 +139,16 @@ describe('Teste da tela de receitas em progresso', () => {
   });
 
   it('Se os elementos aparecem na tela com Drink', async () => {
-    global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(oneDrinkId15997),
-    }));
+    await act(async () => {
+      global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(oneDrinkId15997),
+      }));
 
-    renderWithRouter(
-      <RecipeDetails />,
-      URL_DRINKS,
-    );
+      renderWithRouter(
+        <RecipeDetails />,
+        URL_DRINKS,
+      );
+    });
 
     const photo = screen.getByRole('img', {
       name: /gg/i,
@@ -165,15 +169,17 @@ describe('Teste da tela de receitas em progresso', () => {
   });
 
   it('Se o carousel funciona em Meal', async () => {
-    global.fetch = jest.fn((url) => Promise.resolve({
-      json: jest.fn()
-        .mockResolvedValue(url.includes('/meals') ? oneMeal : drinks),
-    }));
+    act(() => {
+      global.fetch = jest.fn((url) => Promise.resolve({
+        json: jest.fn()
+          .mockResolvedValue(url.includes('/meals') ? oneMeal : drinks),
+      }));
 
-    renderWithRouter(
-      <RecipeDetails />,
-      URL_MEALS,
-    );
+      renderWithRouter(
+        <RecipeDetails />,
+        URL_MEALS,
+      );
+    });
 
     const card0 = await screen.findByRole('img', {
       name: /gg/i,
@@ -185,21 +191,23 @@ describe('Teste da tela de receitas em progresso', () => {
   });
 
   it('Se o carousel funciona em Drink', async () => {
-    global.fetch = jest.fn((url) => Promise.resolve({
-      json: jest.fn()
-        .mockResolvedValue(url.includes('/drinks') ? oneDrinkId15997 : meals),
-    }));
+    await act(async () => {
+      global.fetch = jest.fn((url) => Promise.resolve({
+        json: jest.fn()
+          .mockResolvedValue(url.includes('/drinks') ? oneDrinkId15997 : meals),
+      }));
 
-    renderWithRouter(
-      <RecipeDetails />,
-      URL_DRINKS,
-    );
+      renderWithRouter(
+        <RecipeDetails />,
+        URL_DRINKS,
+      );
+    });
 
-    const card0 = await screen.findByRole('img', {
+    const card0 = screen.getByRole('img', {
       name: /corba/i,
     });
-    const card1 = await screen.findByRole('img', {
-      name: /burek/i,
+    const card1 = screen.getByRole('img', {
+      name: /kumpir/i,
     });
     expect(card0 && card1).toBeDefined();
   });
