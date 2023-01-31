@@ -11,6 +11,7 @@ const categButtons = [
 
 function FavoriteRecipes() {
   const [receivedRecipes, setReceivedRecipes] = useState([]);
+  const [filter, setFilter] = useState('all');
 
   const removeFavorite = (idRef) => {
     const answer = receivedRecipes.filter(({ id }) => id !== idRef);
@@ -33,6 +34,7 @@ function FavoriteRecipes() {
         <button
           key={ categ }
           type="button"
+          onClick={ () => setFilter(categ) }
           data-testid={ `filter-by-${categ}-btn` }
         >
           {title}
@@ -43,28 +45,38 @@ function FavoriteRecipes() {
 
   const elements = (
     <ul>
-      {receivedRecipes.map((receive, index) => {
-        const { id, type, nationality, category, alcoholicOrNot, name, image } = receive;
-        const URL = `http://localhost:3000/${type}s/${id}`;
+      {receivedRecipes
+        .filter(({ type }) => {
+          if (filter === 'all') return type;
+          return type === filter;
+        })
+        .map(({
+          id, type, nationality, category, alcoholicOrNot, name, image,
+        }, index) => {
+          const URL = `http://localhost:3000/${type}s/${id}`;
 
-        let text = alcoholicOrNot;
-        if (type === 'meal') text = `${nationality} - ${category}`;
+          let text = alcoholicOrNot;
+          if (type === 'meal') text = `${nationality} - ${category}`;
 
-        return (
-          <li key={ id }>
-            <img
-              src={ image }
-              alt={ name }
-              data-testid={ `${index}-horizontal-image` }
-            />
+          return (
+            <li key={ id }>
+              <img
+                src={ image }
+                alt={ name }
+                data-testid={ `${index}-horizontal-image` }
+              />
 
-            <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
-            <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
+              <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
+              <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
 
-            <FavButtons index={ index } URL={ URL } remove={ () => removeFavorite(id) } />
-          </li>
-        );
-      })}
+              <FavButtons
+                index={ index }
+                URL={ URL }
+                remove={ () => removeFavorite(id) }
+              />
+            </li>
+          );
+        })}
     </ul>
   );
 
