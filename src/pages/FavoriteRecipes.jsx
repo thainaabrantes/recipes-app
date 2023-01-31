@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import heartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 const categButtons = [
   { title: 'All', categ: 'all' },
@@ -11,16 +13,18 @@ function FavoriteRecipes() {
   const [receivedRecipes, setReceivedRecipes] = useState([]);
 
   useEffect(() => {
-    setReceivedRecipes(localStorage.getItem('favoriteRecipes'));
+    const answer = localStorage.getItem('favoriteRecipes');
+    setReceivedRecipes(JSON.parse(answer));
   }, []);
 
-  const clipboard = (src) => {
-    Navigator.clipboard(src);
-    global.alert('Link copied!');
+  const clipboard = (id, type) => {
+    const link = `http://localhost:3000/${type}s/${id}`;
+    navigator.clipboard.writeText(link)
+      .then(global.alert('Link copied!'));
   };
 
   const filterButtons = (
-    <>
+    <div>
       {categButtons.map(({ title, categ }) => (
         <button
           key={ categ }
@@ -30,11 +34,11 @@ function FavoriteRecipes() {
           {title}
         </button>
       ))}
-    </>
+    </div>
   );
 
   const elements = (
-    <>
+    <ul>
       {receivedRecipes.map((receive, index) => {
         const { id, type, nationality, category, alcoholicOrNot, name, image } = receive;
 
@@ -42,7 +46,7 @@ function FavoriteRecipes() {
         if (type === 'meal') text = `${nationality} - ${category}`;
 
         return (
-          <div key={ id }>
+          <li key={ id }>
             <img
               src={ image }
               alt={ name }
@@ -52,24 +56,24 @@ function FavoriteRecipes() {
             <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
             <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
 
-            <button
-              type="button"
-              onClick={ () => clipboard(image) }
+            <input
+              type="image"
+              src={ shareIcon }
+              alt="Share Icon"
+              onClick={ () => clipboard(id, type) }
               data-testid={ `${index}-horizontal-share-btn` }
-            >
-              Share
-            </button>
+            />
 
-            <button
-              type="button"
+            <input
+              type="image"
+              src={ heartIcon }
+              alt="Heart Icon"
               data-testid={ `${index}-horizontal-favorite-btn` }
-            >
-              Disfavorite
-            </button>
-          </div>
+            />
+          </li>
         );
       })}
-    </>
+    </ul>
   );
 
   return (
