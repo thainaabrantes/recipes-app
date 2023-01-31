@@ -12,10 +12,20 @@ const categButtons = [
 function FavoriteRecipes() {
   const [receivedRecipes, setReceivedRecipes] = useState([]);
 
+  const removeFavorite = (idRef) => {
+    const answer = receivedRecipes.filter(({ id }) => id !== idRef);
+    setReceivedRecipes(answer);
+  };
+
   useEffect(() => {
     const answer = localStorage.getItem('favoriteRecipes');
     setReceivedRecipes(JSON.parse(answer));
   }, []);
+
+  useEffect(() => {
+    const answer = JSON.stringify(receivedRecipes);
+    localStorage.setItem('favoriteRecipes', answer);
+  }, [receivedRecipes]);
 
   const filterButtons = (
     <div>
@@ -51,7 +61,7 @@ function FavoriteRecipes() {
             <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
             <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
 
-            <FavButtons index={ index } URL={ URL } />
+            <FavButtons index={ index } URL={ URL } remove={ () => removeFavorite(id) } />
           </li>
         );
       })}
