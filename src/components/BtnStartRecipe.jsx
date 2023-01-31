@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import useRecipeAPI from '../hook/useRecipeAPi';
 import '../css/BtnStartRecipe.css';
+import useRecipeAPI from '../hook/useRecipeAPi';
 
 function BtnStartRecipe() {
   const { pageId } = useRecipeAPI();
@@ -41,7 +41,7 @@ function BtnStartRecipe() {
     }
 
     if (doneRecipe) {
-      const find = doneRecipe.find((recipe) => recipe.id === id);
+      const find = doneRecipe.find((recipe) => recipe.id === pageId);
       return setDisabled(find);
     }
   };
