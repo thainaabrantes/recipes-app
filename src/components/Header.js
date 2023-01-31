@@ -5,6 +5,7 @@ import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import ProfileIcon from '../images/profileIcon.svg';
 import Lupa from '../images/searchIcon.svg';
+import heartIcon from '../images/blackHeartIcon.svg';
 import SearchBar from './SearchBar';
 
 function Header() {
@@ -45,6 +46,17 @@ function Header() {
           <div>
             <img src={ drinkIcon } alt="Drink" />
             <h1 data-testid="page-title">Profile</h1>
+          </div>
+        ) }
+        { history.location.pathname === '/done-recipes' && (
+          <div>
+            <h1 data-testid="page-title">Done Recipes</h1>
+          </div>
+        ) }
+        { history.location.pathname === '/favorite-recipes' && (
+          <div>
+            <img src={ heartIcon } alt="Heart" />
+            <h1 data-testid="page-title">Favorite Recipes</h1>
           </div>
         ) }
         {
