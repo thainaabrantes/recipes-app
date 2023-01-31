@@ -11,16 +11,17 @@ const categButtons = [
 
 function FavoriteRecipes() {
   const [receivedRecipes, setReceivedRecipes] = useState([]);
+  const [copied, setCopied] = useState({ is: false, from: 0 });
 
   useEffect(() => {
     const answer = localStorage.getItem('favoriteRecipes');
     setReceivedRecipes(JSON.parse(answer));
   }, []);
 
-  const clipboard = (id, type) => {
+  const clipboard = (id, type, index) => {
     const link = `http://localhost:3000/${type}s/${id}`;
     navigator.clipboard.writeText(link)
-      .then(global.alert('Link copied!'));
+      .then(setCopied({ is: true, from: index }));
   };
 
   const filterButtons = (
@@ -60,9 +61,11 @@ function FavoriteRecipes() {
               type="image"
               src={ shareIcon }
               alt="Share Icon"
-              onClick={ () => clipboard(id, type) }
+              onClick={ () => clipboard(id, type, index) }
               data-testid={ `${index}-horizontal-share-btn` }
             />
+
+            {copied.is && copied.from === index ? <p>Link copied!</p> : ''}
 
             <input
               type="image"
