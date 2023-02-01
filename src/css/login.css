@@ -68,6 +68,7 @@
 }
 
 .login-botton {
+  all: unset;
   background-color: #fcc436;
   border-radius: 5px;
   color: white;
