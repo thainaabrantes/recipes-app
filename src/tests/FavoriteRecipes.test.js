@@ -19,17 +19,32 @@ const NTH_FAV = '-horizontal-favorite-btn';
 const elements = [PROFILE, FILTER_ALL, FILTER_MEAL, FILTER_DRINK,
   FIRST_IMG, FIRST_NAME, FIRST_TEXT, `0${NTH_SHARE}`, `0${NTH_FAV}`];
 
-beforeEach(() => {
-  const answer = JSON.stringify(mockFavoriteRecipes);
-  localStorage.setItem('favoriteRecipes', answer);
+describe('Local Storage:', () => {
+  test('Start without localStorage', () => {
+    renderWithRouter(
+      <FavoriteRecipes />,
+      '/favorite-recipes',
+    );
 
-  renderWithRouter(
-    <FavoriteRecipes />,
-    '/favorite-recipes',
-  );
+    const title = screen.getByTestId('page-title');
+    expect(title).toBeInTheDocument();
+
+    const list = screen.queryByTestId(`${FIRST_IMG}`);
+    expect(list).not.toBeInTheDocument();
+  });
 });
 
-describe('Up to 45%:', () => {
+describe('Favorite Recipes:', () => {
+  beforeEach(() => {
+    const answer = JSON.stringify(mockFavoriteRecipes);
+    localStorage.setItem('favoriteRecipes', answer);
+
+    renderWithRouter(
+      <FavoriteRecipes />,
+      '/favorite-recipes',
+    );
+  });
+
   test('Verify elements', () => {
     elements.forEach((element) => {
       expect(screen.getByTestId(element)).toBeInTheDocument();
