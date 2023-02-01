@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import FavButtons from '../components/FavButtons';
 import Header from '../components/Header';
-// import heartIcon from '../images/blackHeartIcon.svg';
 
 const categButtons = [
   { title: 'All', categ: 'all' },
@@ -51,7 +50,13 @@ function FavoriteRecipes() {
           return type === filter;
         })
         .map(({
-          id, type, nationality, category, alcoholicOrNot, name, image,
+          id,
+          type,
+          nationality,
+          category,
+          alcoholicOrNot,
+          name,
+          image,
         }, index) => {
           const URL = `http://localhost:3000/${type}s/${id}`;
 
@@ -86,8 +91,6 @@ function FavoriteRecipes() {
   return (
     <>
       <Header />
-      {/* <img src={ heartIcon } alt="Heart" /> */}
-      <h1 data-testid="page-title">Favorite Recipes</h1>
       {filterButtons}
       {elements}
     </>
