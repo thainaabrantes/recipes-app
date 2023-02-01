@@ -9,6 +9,7 @@ import BtnFavorite from '../components/BtnFavorite';
 import BtnShare from '../components/BtnShare';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import '../css/RecipeDetails.css';
 
 function RecipeDetails() {
   const { recipes, typeFood, alertCopy,
@@ -48,28 +49,47 @@ function RecipeDetails() {
             <div>
               <img
                 data-testid="recipe-photo"
+                className="recipe-photo"
                 src={ recipe.strMealThumb }
                 alt={ recipe.strMeal }
               />
-              <h1 data-testid="recipe-title">{ recipe.strMeal }</h1>
-              <h4 data-testid="recipe-category">{ recipe.strCategory }</h4>
-              <h4>
-                Ingredientes:
-                <ul data-testid="ingredients-list">
-                  {
-                    ingredientsCalc().map((ingredient, index) => (
-                      <li
-                        data-testid={ `${index}-ingredient-name-and-measure` }
-                        key={ ingredient }
-                      >
-                        { ingredient }
-                      </li>
-                    ))
-                  }
-                </ul>
+              <h1
+                className="recipe-title"
+                data-testid="recipe-title"
+              >
+                { recipe.strMeal }
+              </h1>
+              <h4
+                className="recipe-category"
+                data-testid="recipe-category"
+              >
+                { recipe.strCategory }
+
               </h4>
+              <div className="ingredientss">
+                <h4>
+                  Ingredientes:
+                  <ul data-testid="ingredients-list">
+                    {
+                      ingredientsCalc().map((ingredient, index) => (
+                        <li
+                          data-testid={ `${index}-ingredient-name-and-measure` }
+                          key={ ingredient }
+                        >
+                          { ingredient }
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </h4>
+              </div>
               <h4> Instruções</h4>
-              <p data-testid="instructions">{ recipe.strInstructions }</p>
+              <p
+                className="instructions"
+                data-testid="instructions"
+              >
+                { recipe.strInstructions }
+              </p>
               <iframe
                 data-testid="video"
                 title={ recipe.strMeal }
@@ -123,31 +143,48 @@ function RecipeDetails() {
           : (
             <div>
               <img
+                className="recipe-photo"
                 data-testid="recipe-photo"
                 src={ recipe.strDrinkThumb }
                 alt={ recipe.strDrink }
               />
-              <h1 data-testid="recipe-title">{ recipe.strDrink }</h1>
-              <div data-testid="recipe-category">
+              <h1
+                className="recipe-title"
+                data-testid="recipe-title"
+              >
+                { recipe.strDrink }
+
+              </h1>
+              <div
+                className="recipe-category"
+                data-testid="recipe-category"
+              >
                 { `${recipe.strCategory}: ${recipe.strAlcoholic}` }
               </div>
-              <h4>
-                Ingredientes:
-                <ul data-testid="ingredients-list">
-                  {
-                    ingredientsCalc().map((ingredient, index) => (
-                      <li
-                        data-testid={ `${index}-ingredient-name-and-measure` }
-                        key={ `${ingredient}-${index}` }
-                      >
-                        { ingredient }
-                      </li>
-                    ))
-                  }
-                </ul>
-              </h4>
+              <div className="ingredientss">
+                <h4>
+                  Ingredientes:
+                  <ul data-testid="ingredients-list">
+                    {
+                      ingredientsCalc().map((ingredient, index) => (
+                        <li
+                          data-testid={ `${index}-ingredient-name-and-measure` }
+                          key={ `${ingredient}-${index}` }
+                        >
+                          { ingredient }
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </h4>
+              </div>
               <h4> Instruções</h4>
-              <p data-testid="instructions">{ recipe.strInstructions }</p>
+              <p
+                className="instructions"
+                data-testid="instructions"
+              >
+                { recipe.strInstructions }
+              </p>
               <BtnStartRecipe id={ id } typeFood={ typeFood } />
               <BtnShare
                 id={ id }

@@ -1,8 +1,18 @@
 .btnStart {
+  align-items: center;
+  background: #fcc436;
+  border-radius: 5px;
   bottom: 0;
+  color: white;
   display: flex;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  height: 40px;
   justify-content: center;
+  letter-spacing: 0.03em;
   position: fixed;
-  width: 100%;
+  text-transform: uppercase;
+  width: 336px;
   z-index: 10;
 }
