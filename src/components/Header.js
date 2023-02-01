@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import drinkIcon from '../images/drinkIcon.svg';
-import mealIcon from '../images/mealIcon.svg';
-import ProfileIcon from '../images/profileIcon.svg';
-import Lupa from '../images/searchIcon.svg';
-import heartIcon from '../images/blackHeartIcon.svg';
+import drinkIcon from '../images/drink-icon.svg';
+import logo from '../images/recipes-logo.svg';
+import lupa from '../images/search-blue.svg';
+import profileBlue from '../images/profile-blue.svg';
+import profileYellow from '../images/profile-yellow.svg';
+import mealIcon from '../images/meal-icon.svg';
+import favoriteIcon from '../images/favorite-icon.svg';
+import doneIcon from '../images/done-icon.svg';
 import SearchBar from './SearchBar';
+import '../css/header.css';
 
 function Header() {
   const history = useHistory();
@@ -28,56 +32,68 @@ function Header() {
   }, [history.location]);
 
   return (
-    <header>
-      <div>
+    <header className="header">
+      <div className="yellow-container row">
+        <div className="logo-container row">
+          <img src={ logo } alt="Logo" />
+          <p className="title-p">RECIPES</p>
+          <h1 className="title-h1">app</h1>
+        </div>
+        <div className="row">
+          {
+            renderSearchIcon
+          && (
+            <button
+              className="search-top-btn"
+              src={ lupa }
+              data-testid="search-top-btn"
+              onClick={ () => setShowSearchComponent(!showSearchComponent) }
+            >
+              <img src={ lupa } alt="Lupa" />
+            </button>
+          )
+          }
+          <button
+            className="profile-top-btn"
+            data-testid="profile-top-btn"
+            src={ profileBlue }
+            onClick={ () => history.push('/profile') }
+          >
+            <img src={ profileBlue } alt="Usuário" />
+          </button>
+        </div>
+      </div>
+      <div className="page-title-container">
         { history.location.pathname === '/meals' && (
-          <div>
+          <div className="page-title">
             <img src={ mealIcon } alt="Meal" />
             <h1 data-testid="page-title">Meals</h1>
           </div>
         ) }
         { history.location.pathname === '/drinks' && (
-          <div>
+          <div className="page-title">
             <img src={ drinkIcon } alt="Drink" />
             <h1 data-testid="page-title">Drinks</h1>
           </div>
         ) }
         { history.location.pathname === '/profile' && (
-          <div>
-            <img src={ drinkIcon } alt="Drink" />
+          <div className="page-title">
+            <img src={ profileYellow } alt="Profile" />
             <h1 data-testid="page-title">Profile</h1>
           </div>
         ) }
         { history.location.pathname === '/done-recipes' && (
-          <div>
+          <div className="page-title">
+            <img src={ doneIcon } alt="Done" />
             <h1 data-testid="page-title">Done Recipes</h1>
           </div>
         ) }
         { history.location.pathname === '/favorite-recipes' && (
-          <div>
-            <img src={ heartIcon } alt="Heart" />
+          <div className="page-title">
+            <img src={ favoriteIcon } alt="Heart" />
             <h1 data-testid="page-title">Favorite Recipes</h1>
           </div>
         ) }
-        {
-          renderSearchIcon
-          && (
-            <button
-              src={ Lupa }
-              data-testid="search-top-btn"
-              onClick={ () => setShowSearchComponent(!showSearchComponent) }
-            >
-              <img src={ Lupa } alt="Lupa" />
-            </button>
-          )
-        }
-        <button
-          data-testid="profile-top-btn"
-          src={ ProfileIcon }
-          onClick={ () => history.push('/profile') }
-        >
-          <img src={ ProfileIcon } alt="Usuário" />
-        </button>
       </div>
       <div>
         {
