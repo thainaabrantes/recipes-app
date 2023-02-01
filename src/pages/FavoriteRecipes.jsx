@@ -19,7 +19,7 @@ function FavoriteRecipes() {
 
   useEffect(() => {
     const answer = localStorage.getItem('favoriteRecipes');
-    setReceivedRecipes(JSON.parse(answer));
+    if (answer) setReceivedRecipes(JSON.parse(answer));
   }, []);
 
   useEffect(() => {
