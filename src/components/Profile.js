@@ -8,6 +8,7 @@ function Profile() {
   const user = JSON.parse(localStorage.getItem('user'));
   const enable = false;
   const title = 'Profile';
+
   function getEmail() {
     return (
       <p type="text" data-testid="profile-email">
@@ -15,6 +16,7 @@ function Profile() {
       </p>
     );
   }
+
   return (
     <>
       <Header
