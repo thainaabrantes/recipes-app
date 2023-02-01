@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import DoneRecipes from './components/DoneRecipes';
-import FavoriteRecipes from './components/FavoriteRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import Profile from './components/Profile';
 import Login from './pages/Login';
 import RecipeDetails from './pages/RecipeDetails';
