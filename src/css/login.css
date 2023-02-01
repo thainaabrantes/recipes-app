@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+.purple-container {
+  background-color: #41197f;
+  display: flex;
+  height: 50%;
+  justify-content: center;
+  position: relative;
+}
+
+.logo-img {
+  height: 180px;
+  margin-top: 30px;
+  width: 180px;
+}
+
+.tomato-img {
+  left: 0;
+  position: absolute;
+  top: 45%;
+}
+
+.form-container {
+  height: 50%;
+}
+
+.form-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: Epilogue , sans-serif;
+  margin-top: 102px;
+}
+
+.login-title {
+  color: #41197f;
+  font-size: 25px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 20px;
+  margin-bottom: 19px;
+}
+
+.input-login {
+  border: 0.5px solid #41197f;
+  border-radius: 5px;
+  height: 40px;
+  margin-bottom: 9px;
+  padding: 14px 20px 12px;
+  width: 276px;
+}
+
+.input-login::placeholder {
+  color: #41197f;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.login-botton {
+  background-color: #fcc436;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  height: 40px;
+  line-height: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 276px;
+}
