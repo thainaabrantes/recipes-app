@@ -51,9 +51,9 @@ describe('Teste da tela de recipes terminados', () => {
       history.push('/done-recipes');
     });
     expect(history.location.pathname).toBe('/done-recipes');
-    userEvent.click(screen.getByRole('button', { name: /meals/i }));
-    userEvent.click(screen.getByRole('button', { name: /drinks/i }));
-    userEvent.click(screen.getByRole('button', { name: /all/i }));
+    userEvent.click(screen.getByTestId('filter-by-meal-btn'));
+    userEvent.click(screen.getByTestId('filter-by-drink-btn'));
+    userEvent.click(screen.getByTestId('filter-by-all-btn'));
     window.document.execCommand = jest.fn(() => true);
     await act(async () => {
       userEvent.click(screen.getByTestId('0-horizontal-share-btn'));
