@@ -1,6 +1,6 @@
 import React from 'react';
 import shareIcon from '../images/shareIcon.svg';
-// import '../css/BtnShare.css';
+import '../css/BtnShare.css';
 
 function BtnShare(props) {
   const { handlerClickCopy } = props;

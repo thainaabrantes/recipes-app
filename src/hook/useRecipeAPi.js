@@ -9,15 +9,25 @@ function Recipe() {
   const [recipes, setRecipes] = useState({ recipe: '', id: '' });
   const [typeFood, setTypeFood] = useState(null);
   const [alertCopy, setAlertCopy] = useState(null);
-
   const pageId = location.pathname.match(/\d+$/)[0];
-
   const handlerClickCopy = async () => {
     if (typeFood === 'meals') await copy(`http://localhost:3000/meals/${pageId}`);
     if (typeFood === 'drinks') await copy(`http://localhost:3000/drinks/${pageId}`);
     setAlertCopy(true);
   };
+  const ingCalc = () => {
+    const { recipe } = recipes;
+    const arrIngredients = [];
+    Object.keys(recipe).forEach((key) => {
+      if (key.includes('strIngredient') && recipe[key] !== ''
+        && recipe[key] !== null) {
+        const measureKey = key.replace('Ingredient', 'Measure');
 
+        arrIngredients.push(`${recipe[key]} - ${recipe[measureKey]}`);
+      }
+    });
+    return arrIngredients;
+  };
   useEffect(() => {
     const fetchRecipe = async () => {
       setIsLoading(true);
@@ -39,14 +49,11 @@ function Recipe() {
         }
       } catch (error) {
         console.log(error);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchRecipe();
   }, [pageId, location.pathname]);
-
-  return ({ recipes, isLoading, typeFood, pageId, alertCopy, handlerClickCopy });
+  return ({ recipes, isLoading, typeFood, pageId, alertCopy, handlerClickCopy, ingCalc });
 }
 
 export default Recipe;
