@@ -4,6 +4,7 @@ import React from 'react';
 import App from '../App';
 import SearchBarProvider from '../context/SearchBarProvider';
 import renderWithRouter from './helpers/renderWithRouter';
+import meals from '../../cypress/mocks/meals';
 
 describe('Teste tela de login', () => {
   it('Testar se os inputs e o botão aparecem na tela', () => {
