@@ -49,7 +49,7 @@ function FavoriteRecipes() {
   );
 
   const elements = (
-    <ul>
+    <ul className="favoriteElements">
       {receivedRecipes
         .filter(({ type }) => {
           if (filter === 'all') return type;
@@ -73,21 +73,26 @@ function FavoriteRecipes() {
             <li key={ id }>
               <a href={ URL }>
                 <img
-                  style={ { width: '200px' } }
                   src={ image }
                   alt={ name }
                   data-testid={ `${index}-horizontal-image` }
                 />
-                <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
               </a>
 
-              <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
+              <div className="favoriteInfo">
+                <div className="favoriteText">
+                  <a href={ URL }>
+                    <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
+                  </a>
 
-              <FavButtons
-                index={ index }
-                URL={ URL }
-                remove={ () => removeFavorite(id) }
-              />
+                  <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
+                </div>
+                <FavButtons
+                  index={ index }
+                  URL={ URL }
+                  remove={ () => removeFavorite(id) }
+                />
+              </div>
             </li>
           );
         })}
