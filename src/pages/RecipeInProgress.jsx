@@ -58,7 +58,7 @@ function RecipeInProgress() {
   }, [recipe]);
 
   return (
-    <div>
+    <div className="container-inprogress">
       {recipe && (
         <>
           <div className="primeiro-setor-foto">
@@ -99,12 +99,12 @@ function RecipeInProgress() {
             </div>
           </div>
           {alertCopy && <p>Link copied!</p>}
-          <p>Ingredients</p>
+          <p className="title-inprogress">Ingredients</p>
           <div className="ingredients-in-progress">
             {ingredients
           && ingredients.map((e, i) => (
             <label
-              className={ `${e.checked && 'scratched'}` }
+              className={ `itens-in-progress ${e.checked && 'scratched'}` }
               key={ e.str }
               data-testid={ `${i}-ingredient-step` }
               htmlFor={ e.str }
@@ -120,8 +120,17 @@ function RecipeInProgress() {
             </label>
           ))}
           </div>
-          <p data-testid="instructions">{recipe.strInstructions}</p>
+          <p className="title-inprogress">Instructions</p>
+          <div className="ingredients-in-progress">
+            <p
+              className="instructions-inprogress"
+              data-testid="instructions"
+            >
+              {recipe.strInstructions}
+            </p>
+          </div>
           <button
+            className="finish-button-inprogress"
             disabled={ isButtonFinishDisabled() }
             data-testid="finish-recipe-btn"
             type="button"
