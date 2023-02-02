@@ -9,16 +9,20 @@ import RecipeDetails from '../pages/RecipeDetails';
 import App from '../App';
 import drinks from '../../cypress/mocks/drinks';
 import meals from '../../cypress/mocks/meals';
+import mockFavorite from './mocks/mockFavorites';
 
 const copy = require('clipboard-copy');
 
 describe('Teste da tela de receitas em progresso', () => {
   afterEach(() => {
     jest.clearAllMocks();
+    localStorage.clear();
   });
 
   const URL_MEALS = '/meals/52771';
   const URL_DRINKS = '/drinks/15997';
+  const BLACK_HEART = 'http://localhost/blackHeartIcon.svg';
+  const WHITE_HEART = 'http://localhost/whiteHeartIcon.svg';
 
   it('Se os elementos aparecem na tela com Meal', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
@@ -88,6 +92,44 @@ describe('Teste da tela de receitas em progresso', () => {
     expect(navigator.clipboard.writeText).toBeCalledTimes(1);
   });
 
+  it('Se o botão Favorite fuciona com Meal e localStorage cheio', async () => {
+    const answer = JSON.stringify(mockFavorite);
+    localStorage.setItem('favoriteRecipes', answer);
+    await act(async () => {
+      global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(oneMeal),
+      }));
+      renderWithRouter(
+        <RecipeDetails />,
+        URL_MEALS,
+      );
+    });
+
+    const btnFavBefore = screen.getByRole('img', {
+      name: /favoriteicon/i,
+    });
+    expect(btnFavBefore.src).toContain(BLACK_HEART);
+
+    act(() => {
+      userEvent.click(btnFavBefore);
+    });
+
+    const storage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    expect(storage).toHaveLength(4);
+
+    const btnFavAfter = screen.getByRole('img', {
+      name: /favoriteicon/i,
+    });
+    expect(btnFavAfter.src).toContain(WHITE_HEART);
+
+    act(() => {
+      userEvent.click(btnFavBefore);
+    });
+
+    const storage1 = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    expect(storage1).toHaveLength(5);
+  });
+
   it('Se o botão Favorite fuciona com Meal', async () => {
     await act(async () => {
       global.fetch = jest.fn(() => Promise.resolve({
@@ -102,7 +144,7 @@ describe('Teste da tela de receitas em progresso', () => {
     const btnFavBefore = screen.getByRole('img', {
       name: /favoriteicon/i,
     });
-    expect(btnFavBefore.src).toContain('http://localhost/whiteHeartIcon.svg');
+    expect(btnFavBefore.src).toContain(WHITE_HEART);
 
     act(() => {
       userEvent.click(btnFavBefore);
@@ -111,7 +153,7 @@ describe('Teste da tela de receitas em progresso', () => {
     const btnFavAfter = screen.getByRole('img', {
       name: /favoriteicon/i,
     });
-    expect(btnFavAfter.src).toContain('http://localhost/blackHeartIcon.svg');
+    expect(btnFavAfter.src).toContain(BLACK_HEART);
 
     const storage1 = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const meal = {
@@ -124,7 +166,6 @@ describe('Teste da tela de receitas em progresso', () => {
       image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
     };
     expect(storage1[0]).toEqual(meal);
-
     act(() => {
       userEvent.click(btnFavBefore);
     });
@@ -132,6 +173,7 @@ describe('Teste da tela de receitas em progresso', () => {
     const storage2 = JSON.parse(localStorage.getItem('favoriteRecipes'));
     expect(storage2.length).toBe(0);
   });
+
   it('Se o botão Favorite fuciona com Drink', async () => {
     await act(async () => {
       global.fetch = jest.fn(() => Promise.resolve({
@@ -146,7 +188,7 @@ describe('Teste da tela de receitas em progresso', () => {
     const btnFavBefore = screen.getByRole('img', {
       name: /favoriteicon/i,
     });
-    expect(btnFavBefore.src).toContain('http://localhost/whiteHeartIcon.svg');
+    expect(btnFavBefore.src).toContain(WHITE_HEART);
 
     act(() => {
       userEvent.click(btnFavBefore);
@@ -155,7 +197,7 @@ describe('Teste da tela de receitas em progresso', () => {
     const btnFavAfter = screen.getByRole('img', {
       name: /favoriteicon/i,
     });
-    expect(btnFavAfter.src).toContain('http://localhost/blackHeartIcon.svg');
+    expect(btnFavAfter.src).toContain(BLACK_HEART);
 
     const storage1 = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const drink = {
@@ -168,13 +210,50 @@ describe('Teste da tela de receitas em progresso', () => {
       image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
     };
     expect(storage1[0]).toEqual(drink);
-
     act(() => {
       userEvent.click(btnFavBefore);
     });
 
     const storage2 = JSON.parse(localStorage.getItem('favoriteRecipes'));
     expect(storage2.length).toBe(0);
+  });
+
+  it('Se o botão Favorite fuciona com Drink e localStorage cheio', async () => {
+    const answer = JSON.stringify(mockFavorite);
+    localStorage.setItem('favoriteRecipes', answer);
+    await act(async () => {
+      global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(oneDrinkId15997),
+      }));
+      renderWithRouter(
+        <RecipeDetails />,
+        URL_DRINKS,
+      );
+    });
+
+    const btnFavBefore = screen.getByRole('img', {
+      name: /favoriteicon/i,
+    });
+    expect(btnFavBefore.src).toContain(BLACK_HEART);
+
+    act(() => {
+      userEvent.click(btnFavBefore);
+    });
+
+    const storage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    expect(storage).toHaveLength(4);
+
+    const btnFavAfter = screen.getByRole('img', {
+      name: /favoriteicon/i,
+    });
+    expect(btnFavAfter.src).toContain(WHITE_HEART);
+
+    act(() => {
+      userEvent.click(btnFavBefore);
+    });
+
+    const storage1 = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    expect(storage1).toHaveLength(5);
   });
 
   it('Se o botão Start Recipe redireciona em Meal', async () => {
