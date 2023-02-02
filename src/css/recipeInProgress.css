@@ -1,3 +1,87 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.primeiro-setor-foto {
+  height: 161.85px;
+  position: relative;
+  width: 100vw;
+}
+
 .scratched {
   text-decoration: line-through solid black;
+}
+
+.img-principal {
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.recipe-title-progress {
+  color: white;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  left: 50%;
+  letter-spacing: 0.105em;
+  line-height: 20px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.category-in-progress {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  left: 18px;
+  position: absolute;
+  top: 14px;
+  width: 50px;
+}
+
+.category-in-progress img {
+  height: 25px;
+  width: 25px;
+}
+
+.category-in-progress span {
+  color: #fcc436;
+  font-size: 18px;
+  font-weight: 700;
+  height: 16.32px;
+  line-height: 12px;
+  margin-left: 15px;
+  text-align: center;
+  width: 19.8px;
+}
+
+.botoes-in-progress {
+  display: flex;
+  position: absolute;
+  right: 5vw;
+  top: 14px;
+}
+
+.botoes-in-progress button {
+  appearance: none;
+  background: none;
+  border: none;
+  margin-left: 15px;
+}
+
+.ingredients-in-progress {
+  border: 0.554px solid #b1b1b1;
+  border-radius: 5.351px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin: 10px;
+  min-height: 133px;
+  width: 335px;
 }
