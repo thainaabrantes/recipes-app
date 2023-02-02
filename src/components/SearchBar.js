@@ -6,6 +6,7 @@ import {
   NAME_LABEL,
   LETTER_LABEL,
 } from '../helpers/strings';
+import '../css/SearchBar.css';
 
 function SearchBar() {
   const { setSearchBar } = useContext(SearchBarContext);
@@ -15,6 +16,7 @@ function SearchBar() {
   const textInput = (
     <input
       type="text"
+      className="searchBarInput"
       onChange={ ({ target }) => setSearch({ ...search, text: target.value }) }
       data-testid="search-input"
     />
@@ -33,7 +35,7 @@ function SearchBar() {
             checked={ search.radio === label }
             data-testid={ `${label}-search-radio` }
           />
-          {`${label} `}
+          <span>{`${label} `}</span>
         </label>
       ))}
     </>
@@ -42,6 +44,7 @@ function SearchBar() {
   const button = (
     <button
       type="button"
+      className="searchBarButton"
       onClick={ () => setSearchBar(search) }
       disabled={ !search.text }
       data-testid="exec-search-btn"
@@ -53,8 +56,10 @@ function SearchBar() {
   return (
     <>
       {textInput}
-      {alterRadioInput}
-      {button}
+      <div className="searchBarRadio">
+        {alterRadioInput}
+        {button}
+      </div>
     </>
   );
 }
