@@ -4,6 +4,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import ordinaryDrinks from '../../cypress/mocks/ordinaryDrinks';
 import App from '../App';
+import SearchBarProvider from '../context/SearchBarProvider';
 import renderWithRouter from './helpers/renderWithRouter';
 
 describe('Teste da pages /Recipes', () => {
@@ -12,7 +13,11 @@ describe('Teste da pages /Recipes', () => {
   });
   it('Testar o filtro drink e all', async () => {
     await act(async () => {
-      const { history } = renderWithRouter(<App />);
+      const { history } = renderWithRouter(
+        <SearchBarProvider>
+          <App />
+        </SearchBarProvider>,
+      );
       history.push('/drinks');
     });
     expect(await screen.findByText(/gg/i)).toBeInTheDocument();

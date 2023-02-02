@@ -107,10 +107,10 @@ function Recipes() {
         All
 
       </button>
-      {categories.map((categoria) => (
+      {categories.map((categoria, index) => (
         <button
           onClick={ handlerClick }
-          key={ categoria }
+          key={ index }
           type="button"
           data-testid={ `${categoria}-category-filter` }
         >
