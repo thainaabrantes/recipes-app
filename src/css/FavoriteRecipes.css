@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 360px;
+}
+
+.favoriteFilters {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+}
+
+.favoriteFilters p {
+  text-align: center;
+}
+
+.favoriteFilters input {
+  height: 2.5rem;
+}
