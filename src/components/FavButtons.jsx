@@ -15,7 +15,7 @@ function FavButtons({ index, URL, remove }) {
   };
 
   return (
-    <>
+    <div className="favoriteFavShareButtons">
       <input
         type="image"
         src={ shareIcon }
@@ -33,7 +33,7 @@ function FavButtons({ index, URL, remove }) {
         onClick={ remove }
         data-testid={ `${index}-horizontal-favorite-btn` }
       />
-    </>
+    </div>
   );
 }
 

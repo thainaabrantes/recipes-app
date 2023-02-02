@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import FavButtons from '../components/FavButtons';
 import Header from '../components/Header';
+import searchBlue from '../images/favorite-icon.svg';
+import mealIcon from '../images/meal-icon.svg';
+import drinkIcon from '../images/drink-icon.svg';
+import '../css/FavoriteRecipes.css';
 
 const categButtons = [
-  { title: 'All', categ: 'all' },
-  { title: 'Meals', categ: 'meal' },
-  { title: 'Drinks', categ: 'drink' },
+  { categ: 'all', label: 'All', src: searchBlue },
+  { categ: 'meal', label: 'Meal', src: mealIcon },
+  { categ: 'drink', label: 'Drink', src: drinkIcon },
 ];
 
 function FavoriteRecipes() {
@@ -28,22 +32,24 @@ function FavoriteRecipes() {
   }, [receivedRecipes]);
 
   const filterButtons = (
-    <div>
-      {categButtons.map(({ title, categ }) => (
-        <button
-          key={ categ }
-          type="button"
-          onClick={ () => setFilter(categ) }
-          data-testid={ `filter-by-${categ}-btn` }
-        >
-          {title}
-        </button>
+    <div className="favoriteFilters">
+      {categButtons.map(({ categ, label, src }) => (
+        <div key={ categ }>
+          <input
+            src={ src }
+            alt={ categ }
+            type="image"
+            onClick={ () => setFilter(categ) }
+            data-testid={ `filter-by-${categ}-btn` }
+          />
+          <p>{label}</p>
+        </div>
       ))}
     </div>
   );
 
   const elements = (
-    <ul>
+    <ul className="favoriteElements">
       {receivedRecipes
         .filter(({ type }) => {
           if (filter === 'all') return type;
@@ -67,21 +73,26 @@ function FavoriteRecipes() {
             <li key={ id }>
               <a href={ URL }>
                 <img
-                  style={ { width: '200px' } }
                   src={ image }
                   alt={ name }
                   data-testid={ `${index}-horizontal-image` }
                 />
-                <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
               </a>
 
-              <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
+              <div className="favoriteInfo">
+                <div className="favoriteText">
+                  <a href={ URL }>
+                    <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
+                  </a>
 
-              <FavButtons
-                index={ index }
-                URL={ URL }
-                remove={ () => removeFavorite(id) }
-              />
+                  <p data-testid={ `${index}-horizontal-top-text` }>{text}</p>
+                </div>
+                <FavButtons
+                  index={ index }
+                  URL={ URL }
+                  remove={ () => removeFavorite(id) }
+                />
+              </div>
             </li>
           );
         })}

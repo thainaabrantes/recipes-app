@@ -95,7 +95,7 @@ function Header() {
           </div>
         ) }
       </div>
-      <div>
+      <div className="searchBarDiv">
         {
           showSearchComponent && <SearchBar />
         }
