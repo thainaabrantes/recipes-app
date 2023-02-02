@@ -4,10 +4,6 @@
   padding: 0;
 }
 
-body {
-  width: 360px;
-}
-
 .favoriteFilters {
   display: flex;
   justify-content: space-around;
