@@ -10,6 +10,8 @@ import App from '../App';
 import drinks from '../../cypress/mocks/drinks';
 import meals from '../../cypress/mocks/meals';
 
+const copy = require('clipboard-copy');
+
 describe('Teste da tela de receitas em progresso', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -55,6 +57,17 @@ describe('Teste da tela de receitas em progresso', () => {
       json: () => Promise.resolve(oneMeal),
     }));
 
+    let clipboardData = '';
+    const mockClipboard = {
+      writeText: jest.fn(
+        (data) => { clipboardData = data; },
+      ),
+      readText: jest.fn(
+        () => clipboardData,
+      ),
+    };
+    global.navigator.clipboard = mockClipboard;
+
     renderWithRouter(
       <RecipeDetails />,
       URL_MEALS,
@@ -68,8 +81,11 @@ describe('Teste da tela de receitas em progresso', () => {
       userEvent.click(btnshare);
     });
 
-    const copy = await screen.findByText(/link copied!/i);
-    expect(copy).toBeDefined();
+    const copied = await screen.findByText(/link copied!/i);
+    expect(copied).toBeDefined();
+
+    copy();
+    expect(navigator.clipboard.writeText).toBeCalledTimes(1);
   });
 
   it('Se o botão Favorite fuciona com Meal', async () => {
@@ -116,8 +132,52 @@ describe('Teste da tela de receitas em progresso', () => {
     const storage2 = JSON.parse(localStorage.getItem('favoriteRecipes'));
     expect(storage2.length).toBe(0);
   });
+  it('Se o botão Favorite fuciona com Drink', async () => {
+    await act(async () => {
+      global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(oneDrinkId15997),
+      }));
+      renderWithRouter(
+        <RecipeDetails />,
+        URL_DRINKS,
+      );
+    });
 
-  it('Se o botão Start Recipe fuciona com Meal', async () => {
+    const btnFavBefore = screen.getByRole('img', {
+      name: /favoriteicon/i,
+    });
+    expect(btnFavBefore.src).toContain('http://localhost/whiteHeartIcon.svg');
+
+    act(() => {
+      userEvent.click(btnFavBefore);
+    });
+
+    const btnFavAfter = screen.getByRole('img', {
+      name: /favoriteicon/i,
+    });
+    expect(btnFavAfter.src).toContain('http://localhost/blackHeartIcon.svg');
+
+    const storage1 = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const drink = {
+      id: '15997',
+      type: 'drink',
+      nationality: '',
+      category: 'Ordinary Drink',
+      alcoholicOrNot: 'Optional alcohol',
+      name: 'GG',
+      image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
+    };
+    expect(storage1[0]).toEqual(drink);
+
+    act(() => {
+      userEvent.click(btnFavBefore);
+    });
+
+    const storage2 = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    expect(storage2.length).toBe(0);
+  });
+
+  it('Se o botão Start Recipe redireciona em Meal', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(oneMeal),
     }));
@@ -136,6 +196,27 @@ describe('Teste da tela de receitas em progresso', () => {
     });
 
     expect(history.location.pathname).toEqual('/meals/52771/in-progress');
+  });
+
+  it('Se o botão Start Recipe redireciona com Drink', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(oneDrinkId15997),
+    }));
+    const { history } = renderWithRouter(
+      <App />,
+      URL_DRINKS,
+    );
+
+    const btnStart = screen.getByRole('button', {
+      name: /start recipe/i,
+    });
+    expect(btnStart).toBeDefined();
+
+    act(() => {
+      userEvent.click(btnStart);
+    });
+
+    expect(history.location.pathname).toEqual('/drinks/15997/in-progress');
   });
 
   it('Se os elementos aparecem na tela com Drink', async () => {
@@ -217,12 +298,23 @@ describe('Teste da tela de receitas em progresso', () => {
       json: () => Promise.resolve(oneDrinkId15997),
     }));
 
+    let clipboardData = '';
+    const mockClipboard = {
+      writeText: jest.fn(
+        (data) => { clipboardData = data; },
+      ),
+      readText: jest.fn(
+        () => clipboardData,
+      ),
+    };
+    global.navigator.clipboard = mockClipboard;
+
     renderWithRouter(
       <RecipeDetails />,
       URL_DRINKS,
     );
 
-    const btnshare = screen.getByRole('img', { name: /share icon/i });
+    const btnshare = await screen.findByRole('img', { name: /share icon/i });
 
     expect(btnshare).toBeDefined();
 
@@ -230,7 +322,10 @@ describe('Teste da tela de receitas em progresso', () => {
       userEvent.click(btnshare);
     });
 
-    const copy = screen.getByText(/link copied!/i);
-    expect(copy).toBeDefined();
+    const copied = await screen.findByText(/link copied!/i);
+    expect(copied).toBeDefined();
+
+    copy();
+    expect(navigator.clipboard.writeText).toBeCalledTimes(1);
   });
 });
