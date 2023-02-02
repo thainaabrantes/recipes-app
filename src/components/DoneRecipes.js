@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import shareIcon from '../images/share-icon.svg';
+import shareIcon from '../images/shareIcon.svg';
 import Header from './Header';
 import mealNDrink from '../images/meal-n-drink.svg';
 import food from '../images/food.svg';
@@ -109,7 +109,7 @@ function DoneRecipes() {
                 data-testid={ `${i}-horizontal-top-text` }
               >
                 { e.type === 'meal'
-                  ? `${e.nationality} • ${e.category}` : e.alcoholicOrNot }
+                  ? `${e.nationality} - ${e.category}` : e.alcoholicOrNot }
               </h4>
               <p
                 className="done-date-recipe"
