@@ -1,0 +1,15 @@
+.back-btn {
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 5px 0 0 5px;
+  height: 40px;
+  position: fixed;
+  right: -7px;
+  top: 32vh;
+  width: 70px;
+}
+
+.back-btn img {
+  transform: rotate(180deg);
+  width: 30px;
+}
