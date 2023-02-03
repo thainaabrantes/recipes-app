@@ -6,7 +6,6 @@ import renderWithRouter from './helpers/renderWithRouter';
 import SearchBarProvider from '../context/SearchBarProvider';
 import Recipes from '../pages/Recipes';
 
-import mealsWithFirstLetterB from '../../cypress/mocks/mealsWithFirstLetterB';
 import beefMeals from '../../cypress/mocks/beefMeals';
 import meals from '../../cypress/mocks/meals';
 
