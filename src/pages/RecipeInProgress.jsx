@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BtnBack from '../components/BtnBack';
 import '../css/recipeInProgress.css';
 import useRecipeInProgress from '../hook/useRecipeInProgress';
 import blackHeart from '../images/blackHeartIcon.svg';
@@ -100,6 +101,7 @@ function RecipeInProgress() {
           </div>
           {alertCopy && <p className="alert">Link copied!</p>}
           <p className="title-inprogress">Ingredients</p>
+          <BtnBack link="/meals" />
           <div className="ingredients-in-progress">
             {ingredients
           && ingredients.map((e, i) => (
