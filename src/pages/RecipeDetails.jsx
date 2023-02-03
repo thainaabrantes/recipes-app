@@ -54,7 +54,7 @@ function RecipeDetails() {
               >
                 { recipe.strCategory }
               </h4>
-              <BtnBack link="/meals" />
+              <BtnBack />
               <div className="ingredients">
                 <h4>
                   Ingredients:
@@ -66,15 +66,7 @@ function RecipeDetails() {
                         data-testid={ `${index}-ingredient-name-and-measure` }
                         key={ ingredient }
                       >
-                        <label htmlFor={ ingredient }>
-                          <input
-                            type="checkbox"
-                            className="checkbox"
-                            name={ ingredient }
-                            id={ ingredient }
-                          />
-                          { ingredient }
-                        </label>
+                        { ingredient }
                       </li>
                     ))
                   }
@@ -162,7 +154,7 @@ function RecipeDetails() {
               >
                 { `${recipe.strCategory}: ${recipe.strAlcoholic}` }
               </div>
-              <BtnBack link="/drinks" />
+              <BtnBack />
               <div className="ingredients">
                 <h4>
                   Ingredients:
@@ -174,15 +166,7 @@ function RecipeDetails() {
                         data-testid={ `${index}-ingredient-name-and-measure` }
                         key={ `${ingredient}-${index}` }
                       >
-                        <label htmlFor={ ingredient }>
-                          <input
-                            type="checkbox"
-                            className="checkbox"
-                            name={ ingredient }
-                            id={ ingredient }
-                          />
-                          { ingredient }
-                        </label>
+                        { ingredient }
                       </li>
                     ))
                   }

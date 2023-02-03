@@ -8,7 +8,6 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  font-family: Epilogue , sans-serif;
   padding: 0 20px;
   position: relative;
 }
@@ -48,9 +47,6 @@
   margin-bottom: 15px;
   position: relative;
   width: 318px;
-
-  /* height: auto;
-  overflow:hidden; */
 }
 
 .link {

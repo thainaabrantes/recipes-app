@@ -6,6 +6,7 @@ import mealNDrink from '../images/meal-n-drink.svg';
 import food from '../images/food.svg';
 import drinks from '../images/drinks.svg';
 import '../css/done-recipes.css';
+import BtnBackProfile from './BtnBackProfile';
 
 const copy = require('clipboard-copy');
 
@@ -69,6 +70,7 @@ function DoneRecipes() {
             <img src={ drinks } alt="Drink" />
           </button>
         </div>
+        <BtnBackProfile />
         {alertCopy && <p className="alert-copy">Link copied!</p>}
         {recipes && recipes.map((e, i) => (
           <div className="card-done-recipe" key={ e.id }>
