@@ -1,0 +1,16 @@
+.back-profile-btn {
+  background-color: white;
+  border: 2px solid #fcc436;
+  border-radius: 50%;
+  height: 40px;
+  position: fixed;
+  right: 5vw;
+  top: 10vh;
+  width: 40px;
+}
+
+.back-profile-btn img {
+  padding-bottom: 5px;
+  transform: rotate(180deg);
+  width: 20px;
+}

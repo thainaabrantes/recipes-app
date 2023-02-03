@@ -97,6 +97,15 @@
   width: 335px;
 }
 
+.checkbox {
+  margin-right: 10px;
+}
+
+.checkbox:checked {
+  accent-color: #fcc436;
+  margin-right: 15px;
+}
+
 .itens-in-progress {
   padding: 5px 0;
 }

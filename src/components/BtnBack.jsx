@@ -2,11 +2,25 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import '../css/BtnBack.css';
 
-function BtnBack(props) {
-  const { link } = props;
+function BtnBack() {
   const history = useHistory();
+  const pageId = history.location.pathname.replace(/[^0-9]/g, '');
+
   const backPage = () => {
-    history.push(link);
+    if (history.location.pathname.includes('/meals')) {
+      if (history.location.pathname === `/meals/${pageId}/in-progress`) {
+        history.push(`/meals/${pageId}`);
+      } else {
+        history.push('/meals');
+      }
+    }
+    if (history.location.pathname.includes('/drinks')) {
+      if (history.location.pathname === `/drinks/${pageId}/in-progress`) {
+        history.push(`/drinks/${pageId}`);
+      } else {
+        history.push('/drinks');
+      }
+    }
   };
   return (
     <button
