@@ -1,9 +1,9 @@
-.share-btn {
+.fav-btn {
   background-color: transparent;
   border: none;
   height: 20px;
-  left: 75vw;
+  left: 85vw;
   position: absolute;
   top: 20px;
-  width: 15px;
+  width: 20px;
 }
