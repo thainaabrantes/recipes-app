@@ -2,6 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
+import '../css/profile.css';
+import doneIcon from '../images/done-icon.svg';
+import favoriteIcon from '../images/favorite-icon.svg';
+import logoutIcon from '../images/logout.svg';
 
 function Profile() {
   const history = useHistory();
@@ -24,33 +28,41 @@ function Profile() {
         title={ title }
       />
       <div className="explore">
-        <p>
+        <p className="profile-email">
           {user && getEmail()}
         </p>
-        <button
-          type="button"
-          data-testid="profile-done-btn"
-          onClick={ () => history.push('/done-recipes') }
-        >
-          Done Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
-          onClick={ () => history.push('/favorite-recipes') }
-        >
-          Favorite Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-logout-btn"
-          onClick={ () => {
-            localStorage.clear();
-            history.push('/');
-          } }
-        >
-          Logout
-        </button>
+        <div className="btns-container">
+          <button
+            className="profile-btn border-bottom"
+            type="button"
+            data-testid="profile-done-btn"
+            onClick={ () => history.push('/done-recipes') }
+          >
+            <img className="icon" src={ doneIcon } alt="Done" />
+            Done Recipes
+          </button>
+          <button
+            className="profile-btn border-bottom"
+            type="button"
+            data-testid="profile-favorite-btn"
+            onClick={ () => history.push('/favorite-recipes') }
+          >
+            <img className="icon" src={ favoriteIcon } alt="Favorite" />
+            Favorite Recipes
+          </button>
+          <button
+            className="profile-btn"
+            type="button"
+            data-testid="profile-logout-btn"
+            onClick={ () => {
+              localStorage.clear();
+              history.push('/');
+            } }
+          >
+            <img className="icon" src={ logoutIcon } alt="Logout" />
+            Logout
+          </button>
+        </div>
       </div>
       <Footer />
     </>
