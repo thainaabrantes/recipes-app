@@ -57,7 +57,7 @@ function RecipeDetails() {
               <BtnBack link="/meals" />
               <div className="ingredients">
                 <h4>
-                  Ingredientes:
+                  Ingredients:
                 </h4>
                 <ul data-testid="ingredients-list">
                   {
@@ -81,7 +81,7 @@ function RecipeDetails() {
                 </ul>
               </div>
               <div className="instructions">
-                <h4> Instruções</h4>
+                <h4> Instructions</h4>
                 <p
                   data-testid="instructions"
                 >
@@ -110,7 +110,7 @@ function RecipeDetails() {
               {
                 recomendation === undefined
                   ? (
-                    <p>Carregando...</p>
+                    <p>Loading...</p>
                   )
                   : (
                     <div className="slider-container">
@@ -165,7 +165,7 @@ function RecipeDetails() {
               <BtnBack link="/drinks" />
               <div className="ingredients">
                 <h4>
-                  Ingredientes:
+                  Ingredients:
                 </h4>
                 <ul data-testid="ingredients-list">
                   {
@@ -189,7 +189,7 @@ function RecipeDetails() {
                 </ul>
               </div>
               <div className="instructions">
-                <h4> Instruções</h4>
+                <h4>Instructions</h4>
                 <p
                   data-testid="instructions"
                 >
@@ -210,7 +210,7 @@ function RecipeDetails() {
               {
                 recomendation === undefined
                   ? (
-                    <p>Carregando...</p>
+                    <p>Loading...</p>
                   )
                   : (
                     <div className="slider-container">

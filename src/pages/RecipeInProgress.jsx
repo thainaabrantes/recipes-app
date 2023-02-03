@@ -98,7 +98,7 @@ function RecipeInProgress() {
               </button>
             </div>
           </div>
-          {alertCopy && <p>Link copied!</p>}
+          {alertCopy && <p className="alert">Link copied!</p>}
           <p className="title-inprogress">Ingredients</p>
           <div className="ingredients-in-progress">
             {ingredients
@@ -115,15 +115,15 @@ function RecipeInProgress() {
                 type="checkbox"
                 name={ e.str }
                 id={ e.str }
+                className="checkbox"
               />
               { e.str }
             </label>
           ))}
           </div>
           <p className="title-inprogress">Instructions</p>
-          <div className="ingredients-in-progress">
+          <div className="instructions">
             <p
-              className="instructions-inprogress"
               data-testid="instructions"
             >
               {recipe.strInstructions}
