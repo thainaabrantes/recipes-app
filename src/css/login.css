@@ -80,3 +80,8 @@
   text-transform: uppercase;
   width: 276px;
 }
+
+.login-botton:disabled {
+  background-color: rgba(252, 196, 54, 0.801);
+  color: rgba(255, 255, 255, 0.555);
+}
