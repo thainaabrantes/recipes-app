@@ -9,8 +9,10 @@ import Recipes from '../pages/Recipes';
 import mealsWithFirstLetterB from '../../cypress/mocks/mealsWithFirstLetterB';
 import beefMeals from '../../cypress/mocks/beefMeals';
 import meals from '../../cypress/mocks/meals';
+
 import { mockMealsCategories, mockDrinksCategories } from './mocks/mockCategories';
 import { mockCategoryShake, mockNameAquamarine } from './mocks/mockDrinks';
+import App from '../App';
 
 const TOP_BUTTON = 'search-top-btn';
 const SEARCH_INPUT = 'search-input';
@@ -176,13 +178,55 @@ describe('Single and Null Responses:', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(history.location.pathname).toBe('/drinks/178319');
+  });
+});
 
-    // const drinkPhoto = screen.getByTestId('recipe-photo');
-    // expect(drinkPhoto).toBeInTheDocument();
-    // expect(aaa).toBeInTheDocument();
+describe('App', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    // expect(screen.getByTestId('recipe-photo')).toBeInTheDocument();
-    // expect(screen.getByTestId('recipe-title')).toHaveTextContent(/Aquamarine/);
-    // expect(screen.getByTestId('recipe-category')).toHaveTextContent(/Cocktail: Alcoholic/);
+  test('Login and Request some meal', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: jest.fn()
+        .mockResolvedValue(meals),
+    }));
+    const { history } = renderWithRouter(
+      <SearchBarProvider>
+        <App />
+      </SearchBarProvider>,
+    );
+
+    const buttonEnter = screen.getByTestId('login-submit-btn');
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
+    expect(buttonEnter).toBeDisabled();
+    userEvent.type(screen.getByRole('textbox'), 'teste@teste.com');
+    userEvent.type(screen.getByPlaceholderText(/password/i), '1234567');
+    expect(buttonEnter).toBeEnabled();
+    userEvent.click(buttonEnter);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/meals');
+
+    const lupa = await screen.findByRole('img', {
+      name: /lupa/i,
+    });
+    act(() => userEvent.click(lupa));
+
+    const searchInput = await screen.findByTestId(SEARCH_INPUT);
+    const nameRadio = await screen.findByTestId(NSR);
+    const searchButton = await screen.findByTestId(SEARCH_BUTTON);
+
+    act(() => {
+      userEvent.type(searchInput, 'kumpir');
+      userEvent.click(nameRadio);
+      userEvent.click(searchButton);
+    });
+
+    const photo = await screen.findByRole('img', {
+      name: /kumpir/i,
+    });
+
+    expect(photo).toBeDefined();
   });
 });

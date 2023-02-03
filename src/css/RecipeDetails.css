@@ -1,5 +1,15 @@
+* {
+  font-family: Poppins , sans-serif;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+}
+
 .recipe-photo {
   border-radius: 10px;
+  filter: brightness(65%);
   height: 200px;
   margin-bottom: 20px;
   object-fit: cover;
@@ -8,10 +18,10 @@
 
 .recipe-title {
   color: white;
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 900;
   height: 21px;
-  left: 109.01px;
+  left: 30vw;
   letter-spacing: 0.105em;
   position: absolute;
   text-align: center;
@@ -22,17 +32,20 @@
 
 .recipe-category {
   color: #fcc436;
+  font-size: 0.9em;
+  font-weight: 900;
   height: 33px;
   left: 17.01px;
   position: absolute;
   top: 14px;
-  width: 118px;
+  width: 150px;
 }
 
-.ingredientss {
+.ingredients {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  padding-left: 20px;
 }
 
 h4 {
@@ -40,40 +53,97 @@ h4 {
   margin-bottom: 15px;
 }
 
-.ingredientss li {
+.ingredients li {
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 14px;
+  list-style: none;
   margin-bottom: 10px;
 }
 
+.checkbox {
+  margin-right: 10px;
+}
+
+.checkbox:checked {
+  accent-color: #fcc436;
+  margin-right: 15px;
+}
+
 .instructions {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.instructions h4 {
+  padding-left: 20px;
+}
+
+.instructions p {
   color: #1a1b1c;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 4vh;
+  padding-left: 20px;
+  width: 95%;
+}
+
+.video {
+  align-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+.slider-container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1vw;
+  width: 95%;
 }
 
 .item {
   align-items: center;
-  background-color: #f2f2f2;
+  background-color: white;
+  border: rgba(128, 128, 128, 0.226) 1px solid;
   border-radius: 10px;
   display: flex;
+  height: 33vh;
   justify-content: space-between;
-  margin-top: 20px;
-  padding: 20px;
+  margin-bottom: 5vh;
+  margin-top: 10px;
 }
 
 .item img {
   height: 156.21px;
-  left: 12px;
   top: 1180px;
   width: 163.33px;
 }
 
 .item h1 {
-  font-size: 20px;
+  font-size: 1em;
   font-weight: 700;
-  text-align: center;}
+  margin-top: 1em;
+  padding-left: 3vw;
+  text-align: left;
+}
+
+.alert {
+  align-content: center;
+  background-color: #fcc436;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  font-weight: 900;
+  height: 30px;
+  justify-content: center;
+  left: 60vw;
+  position: absolute;
+  top: 50px;
+  width: 120px;
+}

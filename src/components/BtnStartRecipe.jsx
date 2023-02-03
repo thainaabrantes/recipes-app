@@ -52,15 +52,17 @@ function BtnStartRecipe() {
   }, [proceed]);
 
   return (
-    <button
-      className="btnStart"
-      type="button"
-      disabled={ disabled }
-      onClick={ redirectTo }
-      data-testid="start-recipe-btn"
-    >
-      { !proceed ? 'Start Recipe' : 'Continue Recipe'}
-    </button>
+    <div className="container-btnStart">
+      <button
+        className="btnStart"
+        type="button"
+        disabled={ disabled }
+        onClick={ redirectTo }
+        data-testid="start-recipe-btn"
+      >
+        { !proceed ? 'Start Recipe' : 'Continue Recipe'}
+      </button>
+    </div>
   );
 }
 

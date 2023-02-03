@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BtnBack from '../components/BtnBack';
 import '../css/recipeInProgress.css';
 import useRecipeInProgress from '../hook/useRecipeInProgress';
 import blackHeart from '../images/blackHeartIcon.svg';
@@ -98,8 +99,9 @@ function RecipeInProgress() {
               </button>
             </div>
           </div>
-          {alertCopy && <p>Link copied!</p>}
+          {alertCopy && <p className="alert">Link copied!</p>}
           <p className="title-inprogress">Ingredients</p>
+          <BtnBack link="/meals" />
           <div className="ingredients-in-progress">
             {ingredients
           && ingredients.map((e, i) => (
@@ -115,15 +117,15 @@ function RecipeInProgress() {
                 type="checkbox"
                 name={ e.str }
                 id={ e.str }
+                className="checkbox"
               />
               { e.str }
             </label>
           ))}
           </div>
           <p className="title-inprogress">Instructions</p>
-          <div className="ingredients-in-progress">
+          <div className="instructions">
             <p
-              className="instructions-inprogress"
               data-testid="instructions"
             >
               {recipe.strInstructions}
