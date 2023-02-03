@@ -52,7 +52,7 @@ function BtnStartRecipe() {
   }, [proceed]);
 
   return (
-    <div className="containr-btnStart">
+    <div className="container-btnStart">
       <button
         className="btnStart"
         type="button"
