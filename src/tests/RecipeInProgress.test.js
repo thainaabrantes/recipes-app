@@ -28,7 +28,7 @@ describe('Teste da tela de receitas em progresso', () => {
     expect(await screen.findByTestId('recipe-photo')).toBeInTheDocument();
     expect(screen.getByTestId('recipe-title').innerHTML).toBe('Spicy Arrabiata Penne');
     expect(await screen.findByTestId('share-btn')).toBeInTheDocument();
-    expect(screen.getByTestId('recipe-category')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /vegetarian/i })).toBeInTheDocument();
     expect(screen.getByText(/1 pound penne rigate/i)).toBeInTheDocument();
     userEvent.click(screen.getByText(/1 pound penne rigate/i));
   });
