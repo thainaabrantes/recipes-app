@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBarContext from '../context/SearchBarContext';
+import Loading from '../components/Loading';
 
 const NUMBER_12 = 12;
 const NUMBER_FIVE = 5;
@@ -93,7 +94,7 @@ function Recipes() {
   };
 
   if (isLoading) {
-    return <p>Carregando...</p>;
+    return <Loading />;
   }
 
   return (

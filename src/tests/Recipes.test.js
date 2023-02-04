@@ -17,6 +17,7 @@ const TOP_BUTTON = 'search-top-btn';
 const SEARCH_INPUT = 'search-input';
 const SEARCH_BUTTON = 'exec-search-btn';
 const NSR = 'name-search-radio';
+const LSR = 'first-letter-search-radio';
 
 const ALL = 'All-category-filter';
 const BEEF = 'Beef-category-filter';
@@ -79,6 +80,24 @@ describe('Recipes Meals:', () => {
     });
 
     expect(screen.getByText(/corba/i)).toBeInTheDocument();
+  });
+
+  test('Verify search with first letter', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(mealsWithFirstLetterB),
+    }));
+
+    await act(async () => userEvent.click(await screen.findByTestId(TOP_BUTTON)));
+
+    userEvent.type(screen.getByTestId(SEARCH_INPUT), 'b');
+    userEvent.click(screen.getByTestId(LSR));
+
+    expect(screen.getByTestId(SEARCH_BUTTON)).toBeEnabled();
+
+    await act(async () => userEvent.click(await screen.findByTestId(SEARCH_BUTTON)));
+
+    expect(await screen.findByText(/bakewell tart/i)).toBeInTheDocument();
+    expect(await screen.findByText(/bread and butter pudding/i)).toBeInTheDocument();
   });
 });
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 function Recomend() {
   const location = useLocation();
@@ -32,7 +33,7 @@ function Recomend() {
   }, [location.pathname]);
 
   if (isLoading) {
-    return <p>Carregando...</p>;
+    return <Loading />;
   }
   return ({ recomendation, isLoading });
 }
