@@ -22,7 +22,6 @@ function Recipe() {
       if (key.includes('strIngredient') && recipe[key] !== ''
         && recipe[key] !== null) {
         const measureKey = key.replace('Ingredient', 'Measure');
-
         arrIngredients.push(`${recipe[key]} - ${recipe[measureKey]}`);
       }
     });
