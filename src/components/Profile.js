@@ -39,7 +39,7 @@ function Profile() {
             onClick={ () => history.push('/done-recipes') }
           >
             <img className="icon" src={ doneIcon } alt="Done" />
-            Done Recipes
+            <span className="page-name">Done Recipes</span>
           </button>
           <button
             className="profile-btn border-bottom"
@@ -48,7 +48,7 @@ function Profile() {
             onClick={ () => history.push('/favorite-recipes') }
           >
             <img className="icon" src={ favoriteIcon } alt="Favorite" />
-            Favorite Recipes
+            <span className="page-name">Favorite Recipes</span>
           </button>
           <button
             className="profile-btn"
@@ -60,7 +60,7 @@ function Profile() {
             } }
           >
             <img className="icon" src={ logoutIcon } alt="Logout" />
-            Logout
+            <span className="page-name">Logout</span>
           </button>
         </div>
       </div>
