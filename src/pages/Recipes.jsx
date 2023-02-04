@@ -6,6 +6,9 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBarContext from '../context/SearchBarContext';
 import Loading from '../components/Loading';
+import imageMealsCategories from '../helpers/imageMealsCategories';
+import imageDrinksCategories from '../helpers/imageDrinksCategories';
+import '../css/Recipes.css';
 
 const NUMBER_12 = 12;
 const NUMBER_FIVE = 5;
@@ -18,8 +21,7 @@ function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
-  const [categories, setCategories] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [categories, setCategories] = useState({ cat: [], img: [] });
   const { searchRecipes } = useContext(SearchBarContext);
 
   const fetchCategories = async () => {
@@ -27,12 +29,12 @@ function Recipes() {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
       const data = await response.json();
       const result = data.meals.map((d) => d.strCategory).slice(0, NUMBER_FIVE);
-      setCategories(result);
+      setCategories({ cat: result, img: imageMealsCategories });
     } if (location.pathname === '/drinks') {
       const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
       const data = await response.json();
       const result = data.drinks.map((d) => d.strCategory).slice(0, NUMBER_FIVE);
-      setCategories(result);
+      setCategories({ cat: result, img: imageDrinksCategories });
     }
   };
 
@@ -49,7 +51,6 @@ function Recipes() {
       }
     } finally {
       setIsLoading(false);
-      setIsFiltered(false);
     }
   };
 
@@ -58,23 +59,18 @@ function Recipes() {
   }, []);
 
   const handlerClick = async ({ target }) => {
-    const categoryFiltered = target.innerText;
-    if (isFiltered === false) {
-      setIsLoading(true);
-      if (location.pathname === '/meals') {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryFiltered}`);
-        const data = await response.json();
-        setRecipes(data.meals.slice(0, NUMBER_12));
-      } if (location.pathname === '/drinks') {
-        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryFiltered}`);
-        const data = await response.json();
-        setRecipes(data.drinks.slice(0, NUMBER_12));
-      }
-      setIsFiltered(true);
-      setIsLoading(false);
-      return;
+    const categoryFiltered = target.alt || target.innerText;
+    setIsLoading(true);
+    if (location.pathname === '/meals') {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryFiltered}`);
+      const data = await response.json();
+      setRecipes(data.meals.slice(0, NUMBER_12));
+    } if (location.pathname === '/drinks') {
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryFiltered}`);
+      const data = await response.json();
+      setRecipes(data.drinks.slice(0, NUMBER_12));
     }
-    fetchRecipes();
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -100,34 +96,48 @@ function Recipes() {
   return (
     <div>
       <Header />
-      <button
-        onClick={ handlerClickAllRecipes }
-        type="button"
-        data-testid="All-category-filter"
-      >
-        All
-
-      </button>
-      {categories.map((categoria, index) => (
-        <button
-          onClick={ handlerClick }
-          key={ index }
-          type="button"
-          data-testid={ `${categoria}-category-filter` }
-        >
-          { categoria }
-        </button>
-      ))}
-      {recipes.map((recipe, index) => (
-        <Card
-          id={ recipe.idMeal || recipe.idDrink }
-          key={ recipe.idMeal || recipe.idDrink }
-          index={ index }
-          name={ recipe.strMeal || recipe.strDrink }
-          image={ recipe.strMealThumb || recipe.strDrinkThumb }
-        />
-      ))}
-      <Footer />
+      <div className="btn-container">
+        <div className="btn-filter-container">
+          <button
+            onClick={ handlerClickAllRecipes }
+            type="button"
+            data-testid="All-category-filter"
+            className="btn-filter"
+          >
+            <img src="https://cdn-icons-png.flaticon.com/512/5393/5393437.png" alt="all.icon" />
+            <p>All</p>
+          </button>
+          {categories.cat.map((categoria, index) => (
+            <button
+              onClick={ handlerClick }
+              key={ index }
+              type="button"
+              data-testid={ `${categoria}-category-filter` }
+              className="btn-filter"
+            >
+              <img
+                src={ location.pathname === '/meals'
+                  ? imageMealsCategories[index]
+                  : imageDrinksCategories[index] }
+                alt={ categoria }
+              />
+              <p>{ categoria }</p>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="recipes-container">
+        {recipes.map((recipe, index) => (
+          <Card
+            id={ recipe.idMeal || recipe.idDrink }
+            key={ recipe.idMeal || recipe.idDrink }
+            index={ index }
+            name={ recipe.strMeal || recipe.strDrink }
+            image={ recipe.strMealThumb || recipe.strDrinkThumb }
+          />
+        ))}
+        <Footer />
+      </div>
     </div>
   );
 }

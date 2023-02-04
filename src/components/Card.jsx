@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import '../css/Card.css';
 
 function Card({ index, name, image, id }) {
   const history = useHistory();
@@ -10,15 +11,19 @@ function Card({ index, name, image, id }) {
   };
 
   return (
-    <div>
+    <div className="card-container">
+      <img
+        src={ image }
+        data-testid={ `${index}-card-img` }
+        alt={ name }
+      />
+      <p data-testid={ `${index}-card-name` }>{name}</p>
       <button
         onClick={ handlerClickCard }
         data-testid={ `${index}-recipe-card` }
       >
         Ver Receita
       </button>
-      <img src={ image } data-testid={ `${index}-card-img` } alt={ name } />
-      <p data-testid={ `${index}-card-name` }>{name}</p>
     </div>
   );
 }
