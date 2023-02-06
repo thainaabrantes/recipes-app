@@ -7,6 +7,7 @@ import food from '../images/food.svg';
 import drinks from '../images/drinks.svg';
 import '../css/done-recipes.css';
 import BtnBackProfile from './BtnBackProfile';
+import Footer from './Footer';
 
 const copy = require('clipboard-copy');
 
@@ -132,6 +133,7 @@ function DoneRecipes() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

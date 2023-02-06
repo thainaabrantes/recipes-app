@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useRecipeAPI from '../hook/useRecipeAPi';
 import useRecomendAPI from '../hook/useRecomendAPI';
 import useLocalStorage from '../hook/useLocalStorage';
@@ -18,7 +18,7 @@ function RecipeDetails() {
     handlerClickCopy } = useRecipeAPI();
   const { recipe, id } = recipes;
   const { recomendation } = useRecomendAPI();
-  const location = useLocation();
+  const history = useHistory();
   const { handlerFavorite, favorite } = useLocalStorage(recipe);
 
   const settings = {
@@ -32,7 +32,7 @@ function RecipeDetails() {
   return (
     <div className="container">
       {
-        location.pathname.includes('/meals')
+        history.location.pathname.includes('/meals')
 
           ? (
             <div>
@@ -109,8 +109,12 @@ function RecipeDetails() {
                       <Slider { ...settings } className="slider-container">
                         {
                           recomendation.map((recom, index) => (
-                            <div
+                            <button
                               key={ recom.idDrink }
+                              onClick={ () => {
+                                history
+                                  .push(`/drinks/)${recom.idDrink}`);
+                              } }
                               className="item"
                               data-testid={ `${recomendation
                                 .indexOf(recomendation[index])}-recommendation-card` }
@@ -126,7 +130,8 @@ function RecipeDetails() {
                               >
                                 { recom.strDrink }
                               </h1>
-                            </div>))
+                            </button>
+                          ))
                         }
                       </Slider>
                     </div>
@@ -201,8 +206,12 @@ function RecipeDetails() {
                       <Slider { ...settings }>
                         {
                           recomendation.map((recom, index) => (
-                            <div
+                            <button
                               key={ recom.idMeal }
+                              onClick={ () => {
+                                history
+                                  .push(`/meals/)${recom.idMeal}`);
+                              } }
                               className="item"
                               data-testid={ `${recomendation
                                 .indexOf(recomendation[index])}-recommendation-card` }
@@ -218,7 +227,7 @@ function RecipeDetails() {
                               >
                                 { recom.strMeal }
                               </h1>
-                            </div>))
+                            </button>))
                         }
                       </Slider>
                     </div>

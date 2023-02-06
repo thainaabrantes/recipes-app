@@ -4,6 +4,7 @@
 
 .container {
   margin: 0;
+  margin-bottom: 5vh;
   padding: 0;
 }
 
@@ -17,8 +18,10 @@
 }
 
 .recipe-title {
+  align-items: center;
   color: white;
-  font-size: 40px;
+  display: flex;
+  font-size: 30px;
   font-weight: 900;
   height: 21px;
   left: 30vw;
@@ -26,7 +29,7 @@
   position: absolute;
   text-align: center;
   text-transform: uppercase;
-  top: 81px;
+  top: 15vh;
   width: 147px;
 }
 
@@ -106,7 +109,7 @@ h4 {
   align-self: center;
   display: flex;
   flex-direction: column;
-  padding-left: 1vw;
+  padding-left: 5vw;
   width: 95%;
 }
 
@@ -118,22 +121,19 @@ h4 {
   display: flex;
   height: 33vh;
   justify-content: space-between;
-  margin-bottom: 5vh;
+  margin-bottom: 7vh;
   margin-top: 10px;
 }
 
 .item img {
-  height: 156.21px;
-  top: 1180px;
-  width: 163.33px;
+  height: 146.21px;
+  width: 153.33px;
 }
 
 .item h1 {
   font-size: 1em;
   font-weight: 700;
-  margin-top: 1em;
-  padding-left: 3vw;
-  text-align: left;
+  text-align: center;
 }
 
 .alert {

@@ -6,6 +6,7 @@ import mealIcon from '../images/meal-icon.svg';
 import drinkIcon from '../images/drink-icon.svg';
 import '../css/FavoriteRecipes.css';
 import BtnBackProfile from '../components/BtnBackProfile';
+import Footer from '../components/Footer';
 
 const categButtons = [
   { categ: 'all', label: 'All', src: searchBlue },
@@ -106,6 +107,7 @@ function FavoriteRecipes() {
       <BtnBackProfile />
       {filterButtons}
       {elements}
+      <Footer />
     </>
   );
 }
