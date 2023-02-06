@@ -31,16 +31,18 @@ export const checkLocalStorage = (id, ingredients, mealsOrDrink) => {
 
 export const makeListIngredients = (obj) => {
   const recipe = Object.values(obj)[0][0];
-  const result = [];
-  for (let i = 1; i < 100; i += 1) {
-    if (recipe[`strIngredient${i}`]) {
-      result.push(
+  const arrIngredients = [];
+  Object.keys(recipe).forEach((key) => {
+    if (key.includes('strIngredient') && recipe[key] !== ''
+      && recipe[key] !== null) {
+      const measureKey = key.replace('Ingredient', 'Measure');
+      arrIngredients.push(
         {
-          str: `${recipe[`strMeasure${i}`]} ${recipe[`strIngredient${i}`]}`,
+          str: `${recipe[key]} - ${recipe[measureKey]}`,
           checked: false,
         },
       );
     }
-  }
-  return result;
+  });
+  return arrIngredients;
 };

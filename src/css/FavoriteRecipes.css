@@ -55,8 +55,10 @@
 }
 
 .favoriteElements .favoriteText a {
+  color: black;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
 }
 
 .favoriteElements .favoriteText p {
